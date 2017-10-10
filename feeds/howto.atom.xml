@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rcyphers:notebook - HowTo</title><link href="https://rcyphers.github.io/" rel="alternate"></link><link href="https://rcyphers.github.io/feeds/howto.atom.xml" rel="self"></link><id>https://rcyphers.github.io/</id><updated>2017-09-13T17:17:20-04:00</updated><entry><title>Pelican Quickstart: Install Pelican on Ubuntu 16.04</title><link href="https://rcyphers.github.io/pelican-base-install.html" rel="alternate"></link><published>2017-09-13T17:17:20-04:00</published><updated>2017-09-13T17:17:20-04:00</updated><author><name>rcyphers</name></author><id>tag:rcyphers.github.io,2017-09-13:/pelican-base-install.html</id><summary type="html">&lt;p&gt;Notes on pelican with python&amp;nbsp;virtualenv&lt;/p&gt;</summary><content type="html">&lt;hr&gt;
+&lt;p&gt;Verified with: &lt;code&gt;Ubuntu 16.04, Python 2.7.12, Pelican v-3.7.1&lt;/code&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;A static website generator uses a markup language, such as &lt;em&gt;Markdown&lt;/em&gt; or &lt;em&gt;reStructuredText&lt;/em&gt;, and a templating engine such as &lt;em&gt;Jinja&lt;/em&gt;, to produce &lt;span class="caps"&gt;HTML&lt;/span&gt; files. Static sites can be hosted easily on github pages, Amazon S3 and even dropbox.  Static site generators offer a lot of control over a web site through templates and plugins without the complexity dealing with a hosting provider or Content Management System (&lt;span class="caps"&gt;CMS&lt;/span&gt;).  &lt;/p&gt;
+&lt;p&gt;Static sites are also more secure because there are fewer moving parts in the deployed&amp;nbsp;website.&lt;/p&gt;
+&lt;p&gt;I chose &lt;a href="https://blog.getpelican.com/"&gt;Pelican&lt;/a&gt; as a static site generator based on its support for Markdown, Pygments, a large number of themes and plugins and of course being hackable in&amp;nbsp;Python.&lt;/p&gt;
+&lt;h2&gt;Why Choose a Static Site&amp;nbsp;Generator?&lt;/h2&gt;
+&lt;p&gt;The typical &lt;span class="caps"&gt;CMS&lt;/span&gt; driven website works by building each page on-demand, fetching content from a database and running it through a template engine. This means each page is assembled from templates and content on each request to the&amp;nbsp;server.&lt;/p&gt;
+&lt;p&gt;A Static Site Generator takes a different approach and generate all the pages of the website only when there’s actually changes to the site. This means there’s no moving parts in the deployed website. Caching gets much easier, performance goes up and static sites are far more&amp;nbsp;secure.&lt;/p&gt;
+&lt;h2&gt;Install Virtualenv and&amp;nbsp;Virtualenvwrapper&lt;/h2&gt;
+&lt;p&gt;Virtualenv is a tool for creating Python environments isolated from the global Python installation and other virtualenv environments.  Virtualenv makes it easier to work on multiple projects without introducing conflicts in dependencies or breaking system-wide&amp;nbsp;packages.&lt;/p&gt;
+&lt;p&gt;Virtualenvwrapper provides a set of commands which simplifies working with virtual environments.  It also places all your virtual environments in one&amp;nbsp;place.&lt;/p&gt;
+&lt;hr&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get update
+sudo apt-get upgrade
+
+sudo apt-get install wget curl git unzip
+sudo apt-get install python-pip
+sudo -H pip install --upgrade pip
+pip install --user virtualenv
+pip install --user virtualenvwrapper
+
+&lt;span class="nb"&gt;cd&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;# virtualenvwrapper setup&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export WORKON_HOME=$HOME/.virtualenv&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export PROJECT_HOME=$HOME/virtenv-projects&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;source $HOME/.local/bin/virtualenvwrapper.sh&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+
+&lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+mkdir &lt;span class="nv"&gt;$PROJECT_HOME&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h2&gt;Install&amp;nbsp;Pelican&lt;/h2&gt;
+&lt;p&gt;Create a virtual environment to isolate the pelican package and its&amp;nbsp;dependencies.  &lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;mkproject myproject&lt;/code&gt; command creates the virtual environment in the &lt;code&gt;$WORKON_HOME&lt;/code&gt;, and a project directory in &lt;code&gt;$PROJECT_HOME&lt;/code&gt;.  The  &lt;code&gt;workon myproject&lt;/code&gt; command will automatically &lt;code&gt;cd&lt;/code&gt; to the project&amp;nbsp;directory.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mkproject pelican
+workon pelican
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Install pelican in the virtualenv.  If you plan on using Markdown as a markup format, you’ll need to also install the &lt;code&gt;Markdown&lt;/code&gt; library.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install pelican
+pip install --upgrade pelican
+pip install Markdown typogrify
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Add support for blogging with Jupyter/IPython Notebooks using the &lt;code&gt;pelican-ipynb&lt;/code&gt; plugin (&lt;a href="https://github.com/danielfrg/pelican-ipynb"&gt;pelican-ipynb&lt;/a&gt;).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install jupyter ipython nbconvert beautifulsoup4
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It&amp;#8217;s a good idea to &amp;#8220;freeze&amp;#8221; the current state of the environment packages for future reference. To do this,&amp;nbsp;run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip freeze &amp;gt; requirements.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Install Pelican Themes and&amp;nbsp;Plugins&lt;/h2&gt;
+&lt;p&gt;Pelican comes with no plugins and two very basic themes, so you have to clone the needed ones to a local directory. Here I clone the whole official plugins and themes repositories, allowing me to experiment with different&amp;nbsp;options.&lt;/p&gt;
+&lt;p&gt;Themes and plugins can be cloned directly into the &lt;code&gt;themes&lt;/code&gt; and &lt;code&gt;plugins&lt;/code&gt; subdirectories of the Pelican site-packages (e.g. &lt;code&gt;$WORKON_HOME/pelican/lib/python2.7/site-packages/pelican/&lt;/code&gt;).  Instead I clone them to my home directory, so will need to specify the location in the pelican configuration file&amp;nbsp;later.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone --recursive https://github.com/getpelican/pelican-themes ~/pelican-themes
+
+git clone --recursive https://github.com/getpelican/pelican-plugins ~/pelican-plugins
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Test it&amp;nbsp;out&lt;/h2&gt;
+&lt;p&gt;At this point you’re ready to create a test blog. Run &lt;code&gt;pelican-quickstart&lt;/code&gt; to start an sequence of interactive of questions that help with the initial configuration.  For most of the questions, it’s okay to just hit &lt;code&gt;Enter&lt;/code&gt;and accept the default&amp;nbsp;value.&lt;/p&gt;
+&lt;p&gt;The ones you may want to modify iniitially&amp;nbsp;include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the title of the&amp;nbsp;website&lt;/li&gt;
+&lt;li&gt;the author of the&amp;nbsp;website&lt;/li&gt;
+&lt;li&gt;n for the &lt;span class="caps"&gt;URL&lt;/span&gt;&amp;nbsp;prefix&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;the&amp;nbsp;timezone&lt;/p&gt;
+&lt;p&gt;pelican-quickstart&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Customize the pelican config file (&lt;code&gt;pelicanconf.py&lt;/code&gt;)&lt;/h2&gt;
+&lt;p&gt;Settings are configured in the form of a Python module (a file). There is an example settings file available for&amp;nbsp;reference.&lt;/p&gt;
+&lt;p&gt;ref: &lt;a href="http://docs.getpelican.com/en/stable/settings.html"&gt;Pelican &amp;gt; Docs &amp;gt;&amp;nbsp;Settings&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Edit the file &lt;code&gt;pelicanconf.py&lt;/code&gt; to specify a theme, activate plugins and tell pelican where to find plugins and&amp;nbsp;themes:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;../../pelican-themes/pelican-bootstrap3&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;JINJA_ENVIRONMENT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;extensions&amp;#39;&lt;/span&gt;: &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;jinja2.ext.i18n&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]}&lt;/span&gt;
+&lt;span class="nv"&gt;PLUGIN_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;../../pelican-plugins/&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;MARKUP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;md&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;ipynb&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;i18n_subsites&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;ipynb.markup&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.simononsoftware.com/virtualenv-tutorial-part-2/"&gt;Virtualenv Tutorial Part 2 (Simon On&amp;nbsp;Software)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://virtualenvwrapper.readthedocs.io/en/latest/index.html"&gt;virtualenvwrapper&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://docs.python-guide.org/en/latest/dev/virtualenvs/"&gt;Pipenv &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; Virtual&amp;nbsp;Environments&lt;/a&gt;&lt;/p&gt;</content><category term="HowTo"></category><category term="pelican"></category><category term="virtualenv"></category></entry><entry><title>Notes on Installing VirtualBox and Vagrant on Ubuntu 14.04</title><link href="https://rcyphers.github.io/vagrant-virtualBox-installation.html" rel="alternate"></link><published>2016-02-26T20:36:23-05:00</published><updated>2017-09-08T13:00:43-04:00</updated><author><name>rcyphers</name></author><id>tag:rcyphers.github.io,2016-02-26:/vagrant-virtualBox-installation.html</id><summary type="html">&lt;p&gt;Notes on Installing VirtualBox and&amp;nbsp;Vagrant&lt;/p&gt;</summary><content type="html">&lt;hr&gt;
+&lt;p&gt;created: &lt;em&gt;Fri Feb 26 20:36:23 &lt;span class="caps"&gt;EST&lt;/span&gt; 2016&lt;/em&gt;&lt;br&gt;
+updated: &lt;em&gt;Fri Sep  8 13:00:43 &lt;span class="caps"&gt;EDT&lt;/span&gt;&amp;nbsp;2017&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Tested&amp;nbsp;on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;VirtualBox v5.0.14, Vagrant v1.8.1 on Ubuntu 14.04.4 &lt;span class="caps"&gt;LTS&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;VirtualBox v5.1.26, Vagrant v2.0.0 on Ubuntu 14.04.5 &lt;span class="caps"&gt;LTS&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;These are notes for how to install VirtualBox and Vagrant on&amp;nbsp;Ubuntu.&lt;/p&gt;
+&lt;h1&gt;Installing&amp;nbsp;VirtualBox&lt;/h1&gt;
+&lt;p&gt;VirtualBox is a tool that allows you to create virtual computers running their own operating system within which you can safely experiment without breaking your actual&amp;nbsp;computer.&lt;/p&gt;
+&lt;p&gt;VirtualBox is free (as in beer) and open source, and you can find more information at &lt;a href="https://www.virtualbox.org"&gt;VirtualBox.org&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Instructions for Installing VirtualBox on Debian-based Linux&amp;nbsp;Distributions&lt;/h2&gt;
+&lt;h3&gt;1. Download&amp;nbsp;VirtualBox&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://www.virtualbox.org/wiki/Downloads"&gt;Here&lt;/a&gt; you will find links to VirtualBox binaries and its source&amp;nbsp;code.&lt;/p&gt;
+&lt;p&gt;Add the following line to your &lt;code&gt;/etc/apt/sources.list&lt;/code&gt;: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;deb&lt;/span&gt; &lt;span class="s"&gt;http://download.virtualbox.org/virtualbox/debian&lt;/span&gt; &lt;span class="kp"&gt;yakkety&lt;/span&gt; &lt;span class="kp"&gt;contrib&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note: &lt;em&gt;According to your distribution, replace &lt;code&gt;yakkety&lt;/code&gt; by &lt;code&gt;xenial&lt;/code&gt;, &lt;code&gt;vivid&lt;/code&gt;, &lt;code&gt;utopic&lt;/code&gt;, &lt;code&gt;trusty&lt;/code&gt;, &lt;code&gt;raring&lt;/code&gt;, &lt;code&gt;quantal&lt;/code&gt;, &lt;code&gt;precise&lt;/code&gt;, &lt;code&gt;lucid&lt;/code&gt;, &lt;code&gt;jessie&lt;/code&gt;, &lt;code&gt;wheezy&lt;/code&gt;, or &lt;code&gt;squeeze&lt;/code&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;h3&gt;2. Add the security&amp;nbsp;key&lt;/h3&gt;
+&lt;p&gt;The Oracle public key for apt-secure can be downloaded
+&lt;a href="https://www.virtualbox.org/download/oracle_vbox_2016.asc"&gt;here&lt;/a&gt; for Debian 8 (&amp;#8220;Jessie&amp;#8221;) / Ubuntu 16.04 (&amp;#8220;Xenial&amp;#8221;) and later.  You can add these keys&amp;nbsp;with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-key add oracle_vbox_2016.asc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;or combine downloading and registering in a single step&amp;nbsp;with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;3. Install&amp;nbsp;VirtualBox&lt;/h3&gt;
+&lt;p&gt;To install VirtualBox,&amp;nbsp;do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get update
+sudo apt-get install virtualbox-5.1
+sudo apt-get install dkms
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Test it&amp;nbsp;out:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vboxmanage --version
+virtualbox
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Install VirtualBox Guest&amp;nbsp;Additions&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Guest Additions&lt;/em&gt; is a package of software components that comes with VirtualBox to improve the Guest performance and provide additional convenience&amp;nbsp;features.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Guest Additions are designed to be installed inside a virtual machine after the guest operating system has been installed. They consist of device drivers and system applications that optimize the guest operating system for better performance and&amp;nbsp;usability.&lt;/p&gt;
+&lt;p&gt;The VirtualBox Guest Additions for all supported guest operating systems are provided as a single &lt;span class="caps"&gt;CD&lt;/span&gt;-&lt;span class="caps"&gt;ROM&lt;/span&gt; image file which is called &lt;code&gt;VBoxGuestAdditions.iso&lt;/code&gt;. This image file is located in the installation directory of VirtualBox. To install the Guest Additions for a particular &lt;span class="caps"&gt;VM&lt;/span&gt;, you mount this &lt;span class="caps"&gt;ISO&lt;/span&gt; file in your &lt;span class="caps"&gt;VM&lt;/span&gt; as a virtual &lt;span class="caps"&gt;CD&lt;/span&gt;-&lt;span class="caps"&gt;ROM&lt;/span&gt; and install from&amp;nbsp;there.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Detailed installation instructions can be found&amp;nbsp;here:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.virtualbox.org/manual/ch04.html"&gt;Oracle &lt;span class="caps"&gt;VM&lt;/span&gt; VirtualBox User Manual - Chapter 4. Guest&amp;nbsp;Additions&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Installing the Guest Additions is quite simple, really. There’s nothing you have to download, as they come with your VirtualBox installation. All you need to do is boot up your desired virtual machine, and then choose &lt;code&gt;Devices -&amp;gt; Insert Guest Additions CD image&lt;/code&gt;. This will insert an &lt;span class="caps"&gt;ISO&lt;/span&gt; image into the virtual &lt;span class="caps"&gt;CD&lt;/span&gt; drive attached to the virtual machine, which should start an autorun&amp;nbsp;prompt.&lt;/p&gt;
+&lt;p&gt;In Windows, it should install with ease thanks to the installer. In Linux, you’ll need to enter your password before the installer takes care of the rest. However, it’ll only work well if you make sure you have gcc, g++, dkms, and kernel-devel&amp;nbsp;installed.&lt;/p&gt;
+&lt;p&gt;In Ubuntu, before choosing to install the Guest Additions, you just need to run the terminal&amp;nbsp;command:&lt;/p&gt;
+&lt;p&gt;sudo apt-get install gcc g++&amp;nbsp;dkms&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="http://www.makeuseof.com/tag/virtualbox-guest-additions-what-they-are-and-how-to-install-them/"&gt;VirtualBox’s Guest Additions: What They Are And How To Install&amp;nbsp;Them&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Upgrading VirtualBox Guest&amp;nbsp;Additions&lt;/h2&gt;
+&lt;p&gt;After upgrading VirtualBox it is recommended to upgrade the guest additions as&amp;nbsp;well.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Each version of VirtualBox, even minor releases, ship with their own version of the Guest Additions. While the interfaces through which the VirtualBox core communicates with the Guest Additions are kept stable so that Guest Additions already installed in a &lt;span class="caps"&gt;VM&lt;/span&gt; should continue to work when VirtualBox is upgraded on the host, for best results, it is recommended to keep the Guest Additions at the same&amp;nbsp;version.&lt;/p&gt;
+&lt;p&gt;Starting with VirtualBox 3.1, the Windows and Linux Guest Additions therefore check automatically whether they have to be updated. If the host is running a newer VirtualBox version than the Guest Additions, a notification with further instructions is displayed in the&amp;nbsp;guest.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://www.virtualbox.org/manual/ch04.html"&gt;Chapter 4. Guest Additions - 4.1.&amp;nbsp;Introduction&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;Keep Guest Additions Up to Date with the &lt;code&gt;vagrant-vbguest&lt;/code&gt; Plugin&lt;/h3&gt;
+&lt;p&gt;You can install a  plugin called &lt;code&gt;vagrant-vbguest&lt;/code&gt; which will check and update the VirtualBox guest additions every time you run a vagrant up&amp;nbsp;command.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When we upgrade VirtualBox, we will get prompted to update the guest additions. That means that the installed version updates with the base version of VirtualBox itself. It does not automatically go back and retrofit the existing machines with the updated guest additions&amp;nbsp;though.&lt;/p&gt;
+&lt;p&gt;If you run vagrant up after you’ve updated VirtualBox, you&amp;#8217;ll see a message indicating you have a mismatch in your guest&amp;nbsp;additions.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="http://discoposse.com/2016/05/23/autoupdating-virtualbox-guest-additions-with-vagrant-vbguest/"&gt;Keeping Guest Additions Up to Date with the vagrant-vbguest&amp;nbsp;Plugin&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;there&amp;#8217;s actually a nice &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; automated way of keeping your &lt;span class="caps"&gt;VM&lt;/span&gt;&amp;#8217;s guest additions in sync with&amp;nbsp;virtualbox.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="http://kvz.io/blog/2013/01/16/vagrant-tip-keep-virtualbox-guest-additions-in-sync/"&gt;Vagrant Tip: Sync VirtualBox Guest&amp;nbsp;Additions&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It&amp;#8217;s not difficult to manually update the VirtualBox Guest Additions version, from the host command&amp;nbsp;line:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vagrant vbguest
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I have never realized how difficult it is to find the download page for the VirtualBox Guest additions, it is not accessible from the wiki, at this time&amp;#8230; After some time spent on Google, here is the&amp;nbsp;answer&amp;#8230;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://blogs.oracle.com/joshis/virtualbox-guest-additions-iso-download"&gt;VirtualBox Guest Additions &lt;span class="caps"&gt;ISO&lt;/span&gt;&amp;nbsp;Download&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1&gt;&lt;span class="caps"&gt;INSTALLING&lt;/span&gt; &lt;span class="caps"&gt;VAGRANT&lt;/span&gt;&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Installing Vagrant is extremely easy. Head over to the &lt;a href="https://www.vagrantup.com/downloads.html"&gt;Vagrant downloads page&lt;/a&gt; and get the appropriate installer or package for your platform.  You can find the &lt;span class="caps"&gt;SHA256&lt;/span&gt; checksums for Vagrant 2.0.0 online and you can verify the checksum&amp;#8217;s signature file, which has been signed using HashiCorp&amp;#8217;s &lt;span class="caps"&gt;GPG&lt;/span&gt;&amp;nbsp;key. &lt;/p&gt;
+&lt;p&gt;Install the package using standard procedures for your operating&amp;nbsp;system.&lt;/p&gt;
+&lt;p&gt;Caveats&lt;/p&gt;
+&lt;p&gt;Beware of system package managers! Some operating system distributions include a vagrant package in their upstream package repos. Please do not install Vagrant in this manner. Typically these packages are missing dependencies or include very outdated versions of Vagrant. If you install via your system&amp;#8217;s package manager, it is very likely that you will experience issues. Please use the official installers on the downloads&amp;nbsp;page.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://www.vagrantup.com/docs/installation/"&gt;Installing&amp;nbsp;Vagrant&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Vagrant version 2.0.0 was released September 7, 2017. &lt;a href="https://github.com/mitchellh/vagrant/blob/master/CHANGELOG.md"&gt;&lt;span class="caps"&gt;CHANGELOG&lt;/span&gt;.md&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.deb
+sudo dpkg -i vagrant_2.0.0_x86_64.deb 
+apt-get install -f
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Test it&amp;nbsp;out:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;which vagrant
+vagrant --version
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h2&gt;Resources&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.flashguides.co.uk/guide/Getting_Started_With_VirtualBox"&gt;Getting Started With&amp;nbsp;VirtualBox&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.scottlowe.org/2015/06/08/using-vagrant-to-learn-ansible/"&gt;Using Vagrant to Help Learn&amp;nbsp;Ansible&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.thegeekstuff.com/2012/02/virtualbox-install-create-vm/"&gt;How to Install Oracle &lt;span class="caps"&gt;VM&lt;/span&gt; VirtualBox and Create a Virtual&amp;nbsp;Machine&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.thegeekstuff.com/2012/03/virtualbox-guest-additions/"&gt;How to Setup VirtualBox Guest Additions and&amp;nbsp;Network&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.vagrantup.com/docs/virtualbox/boxes.html"&gt;Creating a Base&amp;nbsp;Box&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;</content><category term="howTo"></category><category term="vagrant"></category><category term="virtualbox"></category></entry></feed>
