@@ -9,19 +9,19 @@
 
 
 
-<link rel="canonical" href="https://rcyphers.github.io/pelican-base-install.html">
+<link rel="canonical" href="/pelican-install-notes.html">
 
         <meta name="author" content="rcyphers" />
         <meta name="keywords" content="HowTo,pelican,virtualenv" />
-        <meta name="description" content="Notes on pelican with python virtualenv" />
+        <meta name="description" content="Notes on installing pelican in a python virtualenv" />
 
         <meta property="og:site_name" content="rcyphers:notebook" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Pelican Quickstart: Install Pelican on Ubuntu 16.04"/>
-        <meta property="og:url" content="https://rcyphers.github.io/pelican-base-install.html"/>
-        <meta property="og:description" content="Notes on pelican with python virtualenv"/>
+        <meta property="og:url" content="/pelican-install-notes.html"/>
+        <meta property="og:description" content="Notes on installing pelican in a python virtualenv"/>
         <meta property="article:published_time" content="2017-09-13" />
-            <meta property="article:section" content="HowTo" />
+            <meta property="article:section" content="Cookbook" />
             <meta property="article:tag" content="HowTo" />
             <meta property="article:tag" content="pelican" />
             <meta property="article:tag" content="virtualenv" />
@@ -29,21 +29,17 @@
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://rcyphers.github.io/theme/css/bootstrap.flatly.min.css" type="text/css"/>
-    <link href="https://rcyphers.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/theme/css/bootstrap.flatly.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="https://rcyphers.github.io/theme/css/pygments/solarizeddark.css" rel="stylesheet">
-        <link href="https://rcyphers.github.io/theme/css/typogrify.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://rcyphers.github.io/theme/css/style.css" type="text/css"/>
-        <link href="https://rcyphers.github.io/static/custom.css" rel="stylesheet">
-
-        <link href="https://rcyphers.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="rcyphers:notebook ATOM Feed"/>
+    <link href="/theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+        <link href="/static/custom.css" rel="stylesheet">
 
 
 
-        <link href="https://rcyphers.github.io/feeds/howto.atom.xml" type="application/atom+xml" rel="alternate"
-              title="rcyphers:notebook HowTo ATOM Feed"/>
+
 
 </head>
 <body>
@@ -57,16 +53,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="https://rcyphers.github.io/" class="navbar-brand">
+            <a href="/" class="navbar-brand">
 rcyphers:notebook            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="https://rcyphers.github.io/category/howto.html">Howto</a>
+                            <a href="/category/cookbook.html">Cookbook</a>
                         </li>
                         <li >
-                            <a href="https://rcyphers.github.io/category/projects.html">Projects</a>
+                            <a href="/category/projects.html">Projects</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -81,14 +77,14 @@ rcyphers:notebook            </a>
     <div class="row">
         <div class="col-sm-9">
             <ol class="breadcrumb">
-                <li><a href="https://rcyphers.github.io" title="rcyphers:notebook"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="" title="rcyphers:notebook"><i class="fa fa-home fa-lg"></i></a></li>
                 <li class="active">Pelican Quickstart: Install Pelican on Ubuntu&nbsp;16.04</li>
             </ol>
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://rcyphers.github.io/pelican-base-install.html"
+                    <a href="/pelican-install-notes.html"
                        rel="bookmark"
                        title="Permalink to Pelican Quickstart: Install Pelican on Ubuntu 16.04">
                         Pelican Quickstart: Install Pelican on Ubuntu&nbsp;16.04
@@ -109,26 +105,23 @@ rcyphers:notebook            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://rcyphers.github.io/tag/howto.html">HowTo</a>
+	<a href="/tag/howto.html">HowTo</a>
         /
-	<a href="https://rcyphers.github.io/tag/pelican.html">pelican</a>
+	<a href="/tag/pelican.html">pelican</a>
         /
-	<a href="https://rcyphers.github.io/tag/virtualenv.html">virtualenv</a>
+	<a href="/tag/virtualenv.html">virtualenv</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <hr>
-<p>Verified with: <code>Ubuntu 16.04, Python 2.7.12, Pelican v-3.7.1</code></p>
-<hr>
-<p>A static website generator uses a markup language, such as <em>Markdown</em> or <em>reStructuredText</em>, and a templating engine such as <em>Jinja</em>, to produce <span class="caps">HTML</span> files. Static sites can be hosted easily on github pages, Amazon S3 and even dropbox.  Static site generators offer a lot of control over a web site through templates and plugins without the complexity dealing with a hosting provider or Content Management System (<span class="caps">CMS</span>).  </p>
-<p>Static sites are also more secure because there are fewer moving parts in the deployed&nbsp;website.</p>
+                <h2>Why Choose a Static Site&nbsp;Generator?</h2>
+<p>Typical <strong><span class="caps">CMS</span>-driven websites</strong> work by building each page <em>on-demand</em>, fetching content from a database and running it through a template engine. This means each page is assembled from templates and content on each request to the&nbsp;server.</p>
+<p>A <strong>Static Site Generator</strong> takes a different approach and generates all the pages of the website only when there’s actually changes to the site. This means there’s no moving parts in the deployed website. Caching gets much easier, performance goes up and static sites are far more&nbsp;secure.</p>
+<p>A static website generator uses a markup language, such as <em>Markdown</em> or <em>reStructuredText</em>, and a templating engine such as <em>Jinja</em>, to produce <span class="caps">HTML</span> files. Static sites can be hosted easily on github pages, Amazon S3 and even Dropbox.  Static site generators offer a lot of control over a web site through templates and plugins without the complexity dealing with a hosting provider or Content Management System (<span class="caps">CMS</span>).</p>
+<p>Static sites are considered more secure because there are fewer moving parts in the deployed&nbsp;website.</p>
 <p>I chose <a href="https://blog.getpelican.com/">Pelican</a> as a static site generator based on its support for Markdown, Pygments, a large number of themes and plugins and of course being hackable in&nbsp;Python.</p>
-<h2>Why Choose a Static Site&nbsp;Generator?</h2>
-<p>The typical <span class="caps">CMS</span> driven website works by building each page on-demand, fetching content from a database and running it through a template engine. This means each page is assembled from templates and content on each request to the&nbsp;server.</p>
-<p>A Static Site Generator takes a different approach and generate all the pages of the website only when there’s actually changes to the site. This means there’s no moving parts in the deployed website. Caching gets much easier, performance goes up and static sites are far more&nbsp;secure.</p>
 <h2>Install Virtualenv and&nbsp;Virtualenvwrapper</h2>
-<p>Virtualenv is a tool for creating Python environments isolated from the global Python installation and other virtualenv environments.  Virtualenv makes it easier to work on multiple projects without introducing conflicts in dependencies or breaking system-wide&nbsp;packages.</p>
-<p>Virtualenvwrapper provides a set of commands which simplifies working with virtual environments.  It also places all your virtual environments in one&nbsp;place.</p>
+<p><code>Virtualenv</code> is a tool for creating Python environments isolated from the global Python installation and other virtualenv environments.  Virtualenv makes it easier to work on multiple projects without introducing conflicts in dependencies or breaking system-wide&nbsp;packages.</p>
+<p><code>Virtualenvwrapper</code> provides a set of commands which simplifies working with virtual environments.  It also places all your virtual environments in one&nbsp;place.</p>
 <hr>
 <div class="highlight"><pre><span></span>sudo apt-get update
 sudo apt-get upgrade
@@ -154,13 +147,13 @@ mkdir <span class="nv">$PROJECT_HOME</span>
 <hr>
 <h2>Install&nbsp;Pelican</h2>
 <p>Create a virtual environment to isolate the pelican package and its&nbsp;dependencies.  </p>
-<p>The <code>mkproject myproject</code> command creates the virtual environment in the <code>$WORKON_HOME</code>, and a project directory in <code>$PROJECT_HOME</code>.  The  <code>workon myproject</code> command will automatically <code>cd</code> to the project&nbsp;directory.</p>
+<p>The command <code>mkproject myproject</code> creates the virtual environment in the <code>$WORKON_HOME</code>, and a project directory in <code>$PROJECT_HOME</code>.  The  command <code>workon myproject</code> will automatically <code>cd</code> to the project&nbsp;directory.</p>
 <div class="highlight"><pre><span></span>mkproject pelican
 workon pelican
 </pre></div>
 
 
-<p>Install pelican in the virtualenv.  If you plan on using Markdown as a markup format, you’ll need to also install the <code>Markdown</code> library.</p>
+<p>Install pelican in the virtualenv.  If you plan on using Markdown as a markup format, you’ll need to also install the python <code>Markdown</code> library&nbsp;package.</p>
 <div class="highlight"><pre><span></span>pip install pelican
 pip install --upgrade pelican
 pip install Markdown typogrify
@@ -181,7 +174,6 @@ pip install Markdown typogrify
 <p>Pelican comes with no plugins and two very basic themes, so you have to clone the needed ones to a local directory. Here I clone the whole official plugins and themes repositories, allowing me to experiment with different&nbsp;options.</p>
 <p>Themes and plugins can be cloned directly into the <code>themes</code> and <code>plugins</code> subdirectories of the Pelican site-packages (e.g. <code>$WORKON_HOME/pelican/lib/python2.7/site-packages/pelican/</code>).  Instead I clone them to my home directory, so will need to specify the location in the pelican configuration file&nbsp;later.</p>
 <div class="highlight"><pre><span></span>git clone --recursive https://github.com/getpelican/pelican-themes ~/pelican-themes
-
 git clone --recursive https://github.com/getpelican/pelican-plugins ~/pelican-plugins
 </pre></div>
 
@@ -192,29 +184,24 @@ git clone --recursive https://github.com/getpelican/pelican-plugins ~/pelican-pl
 <ul>
 <li>the title of the&nbsp;website</li>
 <li>the author of the&nbsp;website</li>
-<li>n for the <span class="caps">URL</span>&nbsp;prefix</li>
-<li>
-<p>the&nbsp;timezone</p>
-<p>pelican-quickstart</p>
-</li>
+<li><code>n</code> to omit the site <span class="caps">URL</span>&nbsp;prefix</li>
+<li>the&nbsp;timezone</li>
 </ul>
+<p>Enter <code>pelican-quickstart</code> to build an initial configuration file and&nbsp;directory.</p>
 <h2>Customize the pelican config file (<code>pelicanconf.py</code>)</h2>
 <p>Settings are configured in the form of a Python module (a file). There is an example settings file available for&nbsp;reference.</p>
 <p>ref: <a href="http://docs.getpelican.com/en/stable/settings.html">Pelican &gt; Docs &gt;&nbsp;Settings</a></p>
 <p>Edit the file <code>pelicanconf.py</code> to specify a theme, activate plugins and tell pelican where to find plugins and&nbsp;themes:</p>
-<div class="highlight"><pre><span></span><span class="nv">THEME</span> <span class="o">=</span> <span class="s1">&#39;../../pelican-themes/pelican-bootstrap3&#39;</span>
-<span class="nv">JINJA_ENVIRONMENT</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;extensions&#39;</span>: <span class="o">[</span><span class="s1">&#39;jinja2.ext.i18n&#39;</span><span class="o">]}</span>
-<span class="nv">PLUGIN_PATHS</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;../../pelican-plugins/&quot;</span><span class="o">]</span>
-<span class="nv">MARKUP</span> <span class="o">=</span> <span class="o">(</span><span class="s1">&#39;md&#39;</span>, <span class="s1">&#39;ipynb&#39;</span><span class="o">)</span>
-<span class="nv">PLUGINS</span> <span class="o">=</span> <span class="o">[</span> <span class="s1">&#39;i18n_subsites&#39;</span>, <span class="s1">&#39;ipynb.markup&#39;</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><span class="n">JINJA_ENVIRONMENT</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;extensions&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;jinja2.ext.i18n&#39;</span><span class="p">]}</span>
+<span class="n">THEME</span> <span class="o">=</span> <span class="s1">&#39;../../pelican-themes/pelican-bootstrap3&#39;</span>
+<span class="n">PLUGIN_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;../../pelican-plugins/&quot;</span><span class="p">]</span>
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;i18n_subsites&#39;</span><span class="p">,</span> <span class="s1">&#39;ipynb.markup&#39;</span><span class="p">]</span>
+<span class="n">MARKUP</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;md&#39;</span><span class="p">,</span> <span class="s1">&#39;ipynb&#39;</span><span class="p">)</span>
 </pre></div>
 
 
 <hr>
-<h2>References</h2>
-<p><a href="http://www.simononsoftware.com/virtualenv-tutorial-part-2/">Virtualenv Tutorial Part 2 (Simon On&nbsp;Software)</a></p>
-<p><a href="http://virtualenvwrapper.readthedocs.io/en/latest/index.html">virtualenvwrapper</a></p>
-<p><a href="http://docs.python-guide.org/en/latest/dev/virtualenvs/">Pipenv <span class="amp">&amp;</span> Virtual&nbsp;Environments</a></p>
+<p>Verified with: <code>Ubuntu 16.04, Python 2.7.12, Pelican v-3.7.1</code></p>
             </div>
             <!-- /.entry-content -->
         </article>
@@ -236,17 +223,17 @@ git clone --recursive https://github.com/getpelican/pelican-plugins ~/pelican-pl
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
-                        <a href="https://rcyphers.github.io/pelican-base-install.html">
+                        <a href="/pelican-install-notes.html">
                             Pelican Quickstart: Install Pelican on Ubuntu&nbsp;16.04
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://rcyphers.github.io/ISP-perf-check-v4.html">
+                        <a href="/ISP-perf-check.html">
                             Verifying <span class="caps">ISP</span> performance with Raspberry Pi and&nbsp;pandas
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://rcyphers.github.io/vagrant-virtualBox-installation.html">
+                        <a href="/vagrant-virtualBox-install-notes.html">
                             Notes on Installing VirtualBox and Vagrant on Ubuntu&nbsp;14.04
                         </a>
                     </li>
@@ -254,46 +241,51 @@ git clone --recursive https://github.com/getpelican/pelican-plugins ~/pelican-pl
             </li>
 
 
-            <li class="list-group-item"><a href="https://rcyphers.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group list-inline tagcloud" id="tags">
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/data-analysis.html">
+                        <a href="/tag/data-analysis.html">
                             data analysis
                         </a>
                     </li>
                     <li class="list-group-item tag-1">
-                        <a href="https://rcyphers.github.io/tag/howto.html">
+                        <a href="/tag/howto.html">
                             HowTo
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/pelican.html">
+                        <a href="/tag/pelican.html">
                             pelican
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/python.html">
+                        <a href="/tag/python.html">
                             python
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/raspberry-pi.html">
+                        <a href="/tag/raspberry-pi.html">
                             raspberry pi
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/vagrant.html">
+                        <a href="/tag/vagrant.html">
                             vagrant
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/virtualbox.html">
+                        <a href="/tag/virtualbox.html">
                             virtualbox
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/virtualenv.html">
+                        <a href="/tag/virtualenv.html">
                             virtualenv
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/virtualization.html">
+                            virtualization
                         </a>
                     </li>
                 </ul>
@@ -342,13 +334,13 @@ git clone --recursive https://github.com/getpelican/pelican-plugins ~/pelican-pl
       </div>
    </div>
 </footer>
-<script src="https://rcyphers.github.io/theme/js/jquery.min.js"></script>
+<script src="/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="https://rcyphers.github.io/theme/js/bootstrap.min.js"></script>
+<script src="/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="https://rcyphers.github.io/theme/js/respond.min.js"></script>
+<script src="/theme/js/respond.min.js"></script>
 
 
 </body>

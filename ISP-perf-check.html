@@ -1,279 +1,298 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rcyphers:notebook</title><link href="https://rcyphers.github.io/" rel="alternate"></link><link href="https://rcyphers.github.io/feeds/all.atom.xml" rel="self"></link><id>https://rcyphers.github.io/</id><updated>2017-09-13T17:17:20-04:00</updated><entry><title>Pelican Quickstart: Install Pelican on Ubuntu 16.04</title><link href="https://rcyphers.github.io/pelican-base-install.html" rel="alternate"></link><published>2017-09-13T17:17:20-04:00</published><updated>2017-09-13T17:17:20-04:00</updated><author><name>rcyphers</name></author><id>tag:rcyphers.github.io,2017-09-13:/pelican-base-install.html</id><summary type="html">&lt;p&gt;Notes on pelican with python&amp;nbsp;virtualenv&lt;/p&gt;</summary><content type="html">&lt;hr&gt;
-&lt;p&gt;Verified with: &lt;code&gt;Ubuntu 16.04, Python 2.7.12, Pelican v-3.7.1&lt;/code&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;A static website generator uses a markup language, such as &lt;em&gt;Markdown&lt;/em&gt; or &lt;em&gt;reStructuredText&lt;/em&gt;, and a templating engine such as &lt;em&gt;Jinja&lt;/em&gt;, to produce &lt;span class="caps"&gt;HTML&lt;/span&gt; files. Static sites can be hosted easily on github pages, Amazon S3 and even dropbox.  Static site generators offer a lot of control over a web site through templates and plugins without the complexity dealing with a hosting provider or Content Management System (&lt;span class="caps"&gt;CMS&lt;/span&gt;).  &lt;/p&gt;
-&lt;p&gt;Static sites are also more secure because there are fewer moving parts in the deployed&amp;nbsp;website.&lt;/p&gt;
-&lt;p&gt;I chose &lt;a href="https://blog.getpelican.com/"&gt;Pelican&lt;/a&gt; as a static site generator based on its support for Markdown, Pygments, a large number of themes and plugins and of course being hackable in&amp;nbsp;Python.&lt;/p&gt;
-&lt;h2&gt;Why Choose a Static Site&amp;nbsp;Generator?&lt;/h2&gt;
-&lt;p&gt;The typical &lt;span class="caps"&gt;CMS&lt;/span&gt; driven website works by building each page on-demand, fetching content from a database and running it through a template engine. This means each page is assembled from templates and content on each request to the&amp;nbsp;server.&lt;/p&gt;
-&lt;p&gt;A Static Site Generator takes a different approach and generate all the pages of the website only when there’s actually changes to the site. This means there’s no moving parts in the deployed website. Caching gets much easier, performance goes up and static sites are far more&amp;nbsp;secure.&lt;/p&gt;
-&lt;h2&gt;Install Virtualenv and&amp;nbsp;Virtualenvwrapper&lt;/h2&gt;
-&lt;p&gt;Virtualenv is a tool for creating Python environments isolated from the global Python installation and other virtualenv environments.  Virtualenv makes it easier to work on multiple projects without introducing conflicts in dependencies or breaking system-wide&amp;nbsp;packages.&lt;/p&gt;
-&lt;p&gt;Virtualenvwrapper provides a set of commands which simplifies working with virtual environments.  It also places all your virtual environments in one&amp;nbsp;place.&lt;/p&gt;
-&lt;hr&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get update
-sudo apt-get upgrade
-
-sudo apt-get install wget curl git unzip
-sudo apt-get install python-pip
-sudo -H pip install --upgrade pip
-pip install --user virtualenv
-pip install --user virtualenvwrapper
-
-&lt;span class="nb"&gt;cd&lt;/span&gt;
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;# virtualenvwrapper setup&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export WORKON_HOME=$HOME/.virtualenv&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export PROJECT_HOME=$HOME/virtenv-projects&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;source $HOME/.local/bin/virtualenvwrapper.sh&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
-
-&lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
-mkdir &lt;span class="nv"&gt;$PROJECT_HOME&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Verifying ISP performance with Raspberry Pi and pandas - rcyphers:notebook</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-&lt;hr&gt;
-&lt;h2&gt;Install&amp;nbsp;Pelican&lt;/h2&gt;
-&lt;p&gt;Create a virtual environment to isolate the pelican package and its&amp;nbsp;dependencies.  &lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;mkproject myproject&lt;/code&gt; command creates the virtual environment in the &lt;code&gt;$WORKON_HOME&lt;/code&gt;, and a project directory in &lt;code&gt;$PROJECT_HOME&lt;/code&gt;.  The  &lt;code&gt;workon myproject&lt;/code&gt; command will automatically &lt;code&gt;cd&lt;/code&gt; to the project&amp;nbsp;directory.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mkproject pelican
-workon pelican
-&lt;/pre&gt;&lt;/div&gt;
+
+<link rel="canonical" href="/ISP-perf-check.html">
+
+        <meta name="author" content="rcyphers" />
+        <meta name="keywords" content="python,data analysis,raspberry pi" />
+        <meta name="description" content="This story begins, as do so many, with a user complaint about sluggish application response time." />
+
+        <meta property="og:site_name" content="rcyphers:notebook" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Verifying ISP performance with Raspberry Pi and pandas"/>
+        <meta property="og:url" content="/ISP-perf-check.html"/>
+        <meta property="og:description" content="This story begins, as do so many, with a user complaint about sluggish application response time."/>
+        <meta property="article:published_time" content="2017-08-28" />
+            <meta property="article:section" content="projects" />
+            <meta property="article:tag" content="python" />
+            <meta property="article:tag" content="data analysis" />
+            <meta property="article:tag" content="raspberry pi" />
+            <meta property="article:author" content="rcyphers" />
 
 
-&lt;p&gt;Install pelican in the virtualenv.  If you plan on using Markdown as a markup format, you’ll need to also install the &lt;code&gt;Markdown&lt;/code&gt; library.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install pelican
-pip install --upgrade pelican
-pip install Markdown typogrify
-&lt;/pre&gt;&lt;/div&gt;
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.flatly.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+        <link href="/static/custom.css" rel="stylesheet">
 
 
-&lt;p&gt;Add support for blogging with Jupyter/IPython Notebooks using the &lt;code&gt;pelican-ipynb&lt;/code&gt; plugin (&lt;a href="https://github.com/danielfrg/pelican-ipynb"&gt;pelican-ipynb&lt;/a&gt;).&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install jupyter ipython nbconvert beautifulsoup4
-&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;It&amp;#8217;s a good idea to &amp;#8220;freeze&amp;#8221; the current state of the environment packages for future reference. To do this,&amp;nbsp;run:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip freeze &amp;gt; requirements.txt
-&lt;/pre&gt;&lt;/div&gt;
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+rcyphers:notebook            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/category/cookbook.html">Cookbook</a>
+                        </li>
+                        <li class="active">
+                            <a href="/category/projects.html">Projects</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="" title="rcyphers:notebook"><i class="fa fa-home fa-lg"></i></a></li>
+                <li class="active">Verifying <span class="caps">ISP</span> performance with Raspberry Pi and&nbsp;pandas</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/ISP-perf-check.html"
+                       rel="bookmark"
+                       title="Permalink to Verifying ISP performance with Raspberry Pi and pandas">
+                        Verifying <span class="caps">ISP</span> performance with Raspberry Pi and&nbsp;pandas
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2017-08-28T14:39:55-04:00"> Mon 28 August 2017</time>
+    </span>
 
 
-&lt;h2&gt;Install Pelican Themes and&amp;nbsp;Plugins&lt;/h2&gt;
-&lt;p&gt;Pelican comes with no plugins and two very basic themes, so you have to clone the needed ones to a local directory. Here I clone the whole official plugins and themes repositories, allowing me to experiment with different&amp;nbsp;options.&lt;/p&gt;
-&lt;p&gt;Themes and plugins can be cloned directly into the &lt;code&gt;themes&lt;/code&gt; and &lt;code&gt;plugins&lt;/code&gt; subdirectories of the Pelican site-packages (e.g. &lt;code&gt;$WORKON_HOME/pelican/lib/python2.7/site-packages/pelican/&lt;/code&gt;).  Instead I clone them to my home directory, so will need to specify the location in the pelican configuration file&amp;nbsp;later.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone --recursive https://github.com/getpelican/pelican-themes ~/pelican-themes
-
-git clone --recursive https://github.com/getpelican/pelican-plugins ~/pelican-plugins
-&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;Test it&amp;nbsp;out&lt;/h2&gt;
-&lt;p&gt;At this point you’re ready to create a test blog. Run &lt;code&gt;pelican-quickstart&lt;/code&gt; to start an sequence of interactive of questions that help with the initial configuration.  For most of the questions, it’s okay to just hit &lt;code&gt;Enter&lt;/code&gt;and accept the default&amp;nbsp;value.&lt;/p&gt;
-&lt;p&gt;The ones you may want to modify iniitially&amp;nbsp;include:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;the title of the&amp;nbsp;website&lt;/li&gt;
-&lt;li&gt;the author of the&amp;nbsp;website&lt;/li&gt;
-&lt;li&gt;n for the &lt;span class="caps"&gt;URL&lt;/span&gt;&amp;nbsp;prefix&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;the&amp;nbsp;timezone&lt;/p&gt;
-&lt;p&gt;pelican-quickstart&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;Customize the pelican config file (&lt;code&gt;pelicanconf.py&lt;/code&gt;)&lt;/h2&gt;
-&lt;p&gt;Settings are configured in the form of a Python module (a file). There is an example settings file available for&amp;nbsp;reference.&lt;/p&gt;
-&lt;p&gt;ref: &lt;a href="http://docs.getpelican.com/en/stable/settings.html"&gt;Pelican &amp;gt; Docs &amp;gt;&amp;nbsp;Settings&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Edit the file &lt;code&gt;pelicanconf.py&lt;/code&gt; to specify a theme, activate plugins and tell pelican where to find plugins and&amp;nbsp;themes:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;../../pelican-themes/pelican-bootstrap3&amp;#39;&lt;/span&gt;
-&lt;span class="nv"&gt;JINJA_ENVIRONMENT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;extensions&amp;#39;&lt;/span&gt;: &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;jinja2.ext.i18n&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]}&lt;/span&gt;
-&lt;span class="nv"&gt;PLUGIN_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;../../pelican-plugins/&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;span class="nv"&gt;MARKUP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;md&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;ipynb&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;i18n_subsites&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;ipynb.markup&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;hr&gt;
-&lt;h2&gt;References&lt;/h2&gt;
-&lt;p&gt;&lt;a href="http://www.simononsoftware.com/virtualenv-tutorial-part-2/"&gt;Virtualenv Tutorial Part 2 (Simon On&amp;nbsp;Software)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://virtualenvwrapper.readthedocs.io/en/latest/index.html"&gt;virtualenvwrapper&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://docs.python-guide.org/en/latest/dev/virtualenvs/"&gt;Pipenv &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; Virtual&amp;nbsp;Environments&lt;/a&gt;&lt;/p&gt;</content><category term="HowTo"></category><category term="pelican"></category><category term="virtualenv"></category></entry><entry><title>Verifying ISP performance with Raspberry Pi and pandas</title><link href="https://rcyphers.github.io/ISP-perf-check-v4.html" rel="alternate"></link><published>2017-08-28T14:39:55-04:00</published><updated>2017-08-28T14:39:55-04:00</updated><author><name>rcyphers</name></author><id>tag:rcyphers.github.io,2017-08-28:/ISP-perf-check-v4.html</id><summary type="html">&lt;p&gt;This story begins, as do so many, with a user complaint about sluggish application response&amp;nbsp;time.&lt;/p&gt;</summary><content type="html">
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;This story begins, as do so many, with a user complaint about sluggish application&amp;nbsp;response.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;My wife has the opportunity to work from home from time to time, which makes the reliability and performance of our home Internet service more important than it would be if it was only for recreational use. When she experienced several instances of sluggish application responsiveness one week, it seemed like a good time to collect some data and verfiy the &lt;span class="caps"&gt;ISP&lt;/span&gt;&amp;nbsp;performance.&lt;/p&gt;
-&lt;p&gt;As an added bonus, this also gave me a chance to bring the Python data analysis tools to bear on a focused question for which I have a personal connection to the&amp;nbsp;data.&lt;/p&gt;
-&lt;h3 id="The-question-is:"&gt;The question is:&lt;a class="anchor-link" href="#The-question-is:"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;h4 id="Is-my-ISP-reliable-and-performing-to-the-advertised-service-level?"&gt;Is my &lt;span class="caps"&gt;ISP&lt;/span&gt; reliable and performing to the advertised service level?&lt;a class="anchor-link" href="#Is-my-ISP-reliable-and-performing-to-the-advertised-service-level?"&gt;¶&lt;/a&gt;&lt;/h4&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Setup"&gt;Setup&lt;a class="anchor-link" href="#Setup"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;As a first cut at checking performance, I decided to run &lt;strong&gt;&lt;em&gt;speedtest&lt;/em&gt;&lt;/strong&gt; measurements every 10 minutes for two weeks.  After that I made measurements at longer intervals for another 12&amp;nbsp;weeks.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;This isn&amp;#8217;t a practical long term approach for multiple reasons.&lt;/strong&gt;  Running speedtest consumes network capacity that&amp;#8217;s no longer available to other, more useful, applications.  Even more importantly, my service has a &lt;strong&gt;&amp;#8220;Monthly Data Allowance,&amp;#8221;&lt;/strong&gt; and running speedtest too often will overrun the data cap, leading to an overage charge &amp;#8212; &lt;em&gt;Terrible, Horrible, No Good, Very&amp;nbsp;Bad.&lt;/em&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Preliminaries"&gt;Preliminaries&lt;a class="anchor-link" href="#Preliminaries"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;To measure internet throughput, I connected a &lt;em&gt;Raspberry Pi 3 Model B&lt;/em&gt; with an ethernet cable directly to a port on the broadband modem (&lt;em&gt;Arris Cable Modem model &lt;span class="caps"&gt;DG2470A&lt;/span&gt;&lt;/em&gt;) and added a cron job to run a script and record the results automatically at specific predetermined&amp;nbsp;intervals.&lt;/p&gt;
-&lt;p&gt;Since the onboard &lt;span class="caps"&gt;LAN&lt;/span&gt; port port on the Raspberry Pi is only 10/100 Mbps, I needed to add a &lt;span class="caps"&gt;USB&lt;/span&gt; &lt;span class="caps"&gt;GE&lt;/span&gt; &lt;span class="caps"&gt;LAN&lt;/span&gt; adapter, as suggested by Jeff Geerling in this blog post: 
-&lt;a href="https://www.jeffgeerling.com/blogs/jeff-geerling/getting-gigabit-networking"&gt;Getting Gigabit Networking on a Raspberry Pi 2, 3 and&amp;nbsp;B+&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;I chose the
-&lt;a href="https://www.amazon.com/gp/product/B00FFJ0RKE/"&gt;TRENDnet &lt;span class="caps"&gt;USB&lt;/span&gt; 3.0 to Gigabit Ethernet Network Adapter, &lt;span class="caps"&gt;TU3&lt;/span&gt;-&lt;span class="caps"&gt;ETG&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h4 id="The-advertised-service-level-from-the-ISP-is:"&gt;The advertised service level from the &lt;span class="caps"&gt;ISP&lt;/span&gt; is:&lt;a class="anchor-link" href="#The-advertised-service-level-from-the-ISP-is:"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;200 Mbps&amp;nbsp;Download&lt;/li&gt;
-&lt;li&gt;15 Mbps&amp;nbsp;Upload&lt;/li&gt;
-&lt;li&gt;1 &lt;span class="caps"&gt;TB&lt;/span&gt; Monthly Data&amp;nbsp;Allowance&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The &amp;#8220;1 &lt;span class="caps"&gt;TB&lt;/span&gt; Monthly Data Allowance&amp;#8221; effectively means that the 200 Mbps download is a &lt;strong&gt;&lt;em&gt;maximum burst rate&lt;/em&gt;&lt;/strong&gt;.  If a 200 Mbps download &lt;em&gt;could&lt;/em&gt; be sustained, the full monthly data allowance would be consumed in a little more than 11&amp;nbsp;hours.&lt;/p&gt;
-&lt;h4 id="Transferring-1-TB-at-200-Mbps-takes:"&gt;Transferring 1 &lt;span class="caps"&gt;TB&lt;/span&gt; at 200 Mbps takes:&lt;a class="anchor-link" href="#Transferring-1-TB-at-200-Mbps-takes:"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;hr /&gt;
-&lt;p&gt;$$\left( {10^{12}\,B} \right) \left( \frac{8\,b}{B} \right) \left(\frac {1\,s} {200×10^6\,b} \right) \left( \frac{1\,hr}{3600\,s} \right)  = 11.1\,&amp;nbsp;hr$$&lt;/p&gt;
-&lt;hr /&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;The maximmum sustained rate wthout exceeding the data cap would be 3 - 3.3 Mb/s (depending on what the &lt;span class="caps"&gt;ISP&lt;/span&gt; means by &amp;#8220;1 &lt;span class="caps"&gt;TB&lt;/span&gt;&amp;#8221;).&lt;/p&gt;
-&lt;h4 id="Converting-1-TB/Month-to-Mbits/second-(Mbps):"&gt;Converting &lt;code&gt;1 TB/Month&lt;/code&gt; to &lt;code&gt;Mbits/second (Mbps)&lt;/code&gt;:&lt;a class="anchor-link" href="#Converting-1-TB/Month-to-Mbits/second-(Mbps):"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;hr /&gt;
-&lt;p&gt;$$\left( \frac{10^{12}\,B}{mo} \right) \left( \frac{12\,mo}{365\,day} \right) \left( \frac{1\,day}{24\,hr} \right) \left( \frac{1\,hr}{3600\,s} \right) \left( \frac{8\,b}{B} \right) \left( \frac{ 1\,Mb}{10^6\,b} \right)=&amp;nbsp;3.04\,Mbps$$&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;$$\left( \frac{2^{40}\,B}{mo} \right) \left( \frac{12\,mo}{365\,day} \right) \left( \frac{1\,day}{24\,hr} \right) \left( \frac{1\,hr}{3600\,s} \right) \left( \frac{8\,b}{B} \right) \left( \frac{ 1\,Mb}{10^6\,b} \right)=&amp;nbsp;3.35\,Mbps$$&lt;/p&gt;
-&lt;hr /&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="What-that-really-means-is..."&gt;What that really means is&amp;#8230;&lt;a class="anchor-link" href="#What-that-really-means-is..."&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Based on this information, the best way to think of the service agreement is&amp;nbsp;as:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;3 Mbps Sustained Data&amp;nbsp;Rate&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;200 Mbps Maximum Burst&amp;nbsp;Rate&lt;/strong&gt; &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;There&amp;#8217;s no indication from the &lt;span class="caps"&gt;ISP&lt;/span&gt; regarding what the &lt;strong&gt;Maximum Burst Size&lt;/strong&gt; might&amp;nbsp;be.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="1.-Install-speedtest.cli"&gt;1. Install &lt;code&gt;speedtest.cli&lt;/code&gt;&lt;a class="anchor-link" href="#1.-Install-speedtest.cli"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Most people check their home Internet performance by using the &lt;a href="http://speedtest.net"&gt;speedtest&lt;/a&gt; website, and in fact my &lt;span class="caps"&gt;ISP&lt;/span&gt; recommends that as&amp;nbsp;well.&lt;/p&gt;
-&lt;p&gt;Fortunately there&amp;#8217;s a &lt;span class="caps"&gt;CLI&lt;/span&gt; version, &lt;a href="https://github.com/sivel/speedtest-cli"&gt;speedtest-cli&lt;/a&gt;, written by Matt Martz which allows testing to be scripted and&amp;nbsp;automated.&lt;/p&gt;
-&lt;p&gt;Installation is&amp;nbsp;simple:&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install python-pip
+<span class="label label-default">Tags</span>
+	<a href="/tag/python.html">python</a>
+        /
+	<a href="/tag/data-analysis.html">data analysis</a>
+        /
+	<a href="/tag/raspberry-pi.html">raspberry pi</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This story begins, as do so many, with a user complaint about sluggish application&nbsp;response.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>My wife has the opportunity to work from home from time to time, which makes the reliability and performance of our home Internet service more important than it would be if it was only for recreational use. When she experienced several instances of sluggish application responsiveness one week, it seemed like a good time to collect some data and verfiy the <span class="caps">ISP</span>&nbsp;performance.</p>
+<p>As an added bonus, this also gave me a chance to apply the Python data analysis tools to a specific question for which I have personally generated the data&nbsp;set.</p>
+<h3 id="The-question-is:">The question is:<a class="anchor-link" href="#The-question-is:">¶</a></h3><h4 id="Is-my-ISP-reliable-and-performing-to-the-advertised-service-level?">Is my <span class="caps">ISP</span> reliable and performing to the advertised service level?<a class="anchor-link" href="#Is-my-ISP-reliable-and-performing-to-the-advertised-service-level?">¶</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Approach">Approach<a class="anchor-link" href="#Approach">¶</a></h1><p>As a first cut at checking performance, I decided to run <strong><em>speedtest</em></strong> measurements every 10 minutes for two weeks.  After that I made measurements at longer (4- or 12-hour) intervals for another 12&nbsp;weeks.</p>
+<p><strong>This isn&#8217;t a practical long term approach for a couple of reasons.</strong>  Running speedtest consumes network capacity that&#8217;s no longer available to other, more useful, applications.  Even more importantly, my service has a <strong>&#8220;Monthly Data Allowance,&#8221;</strong> and running speedtest too often will overrun the data cap, leading to an overage charge &#8212; <em>Terrible, Horrible, No Good, Very&nbsp;Bad.</em></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Preliminaries">Preliminaries<a class="anchor-link" href="#Preliminaries">¶</a></h2><p>To measure internet throughput, I connected a <em>Raspberry Pi 3 Model B</em> with an ethernet cable directly to a port on the broadband modem (<em>Arris Cable Modem model <span class="caps">DG2470A</span></em>) and added a cron job to run a script and record the results automatically at specific predetermined&nbsp;intervals.</p>
+<p>Since the onboard <span class="caps">LAN</span> port port on the Raspberry Pi is only 10/100 Mbps, I needed to add a <span class="caps">USB</span> <span class="caps">GE</span> <span class="caps">LAN</span> adapter, as suggested by Jeff Geerling in this blog post: 
+<a href="https://www.jeffgeerling.com/blogs/jeff-geerling/getting-gigabit-networking">Getting Gigabit Networking on a Raspberry Pi 2, 3 and&nbsp;B+</a></p>
+<p>I chose the
+<a href="https://www.amazon.com/gp/product/B00FFJ0RKE/">TRENDnet <span class="caps">USB</span> 3.0 to Gigabit Ethernet Network Adapter, <span class="caps">TU3</span>-<span class="caps">ETG</span></a>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="The-advertised-service-level-from-the-ISP-is:">The advertised service level from the <span class="caps">ISP</span> is:<a class="anchor-link" href="#The-advertised-service-level-from-the-ISP-is:">¶</a></h4><ul>
+<li>200 Mbps&nbsp;Download</li>
+<li>15 Mbps&nbsp;Upload</li>
+<li>1 <span class="caps">TB</span> Monthly Data&nbsp;Allowance</li>
+</ul>
+<p>The &#8220;1 <span class="caps">TB</span> Monthly Data Allowance&#8221; effectively means that the 200 Mbps download is a <strong><em>maximum burst rate</em></strong>.  If a 200 Mbps download <em>could</em> be sustained, the full monthly data allowance would be consumed in a little more than 11&nbsp;hours.</p>
+<hr />
+<p><strong>Transferring 1 <span class="caps">TB</span> at 200 Mbps&nbsp;takes:</strong></p>
+<p>$$\left( {10^{12}\,B} \right) \left( \frac{8\,b}{B} \right) \left(\frac {1\,s} {200×10^6\,b} \right) \left( \frac{1\,hr}{3600\,s} \right)  = 11.1\,&nbsp;hr$$</p>
+<hr />
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The maximmum sustained rate wthout exceeding the data cap would be 3 - 3.3 Mb/s (depending on what the <span class="caps">ISP</span> means by &#8220;1 <span class="caps">TB</span>&#8221;).</p>
+<p><strong>Converting &#8216;1 <span class="caps">TB</span>/Month&#8217; to &#8216;Mbits/second&nbsp;(Mbps)&#8217;:</strong></p>
+<hr />
+<p>$$\left( \frac{10^{12}\,B}{mo} \right) \left( \frac{12\,mo}{365\,day} \right) \left( \frac{1\,day}{24\,hr} \right) \left( \frac{1\,hr}{3600\,s} \right) \left( \frac{8\,b}{B} \right) \left( \frac{ 1\,Mb}{10^6\,b} \right)=&nbsp;3.04\,Mbps$$</p>
+<hr />
+<p>$$\left( \frac{2^{40}\,B}{mo} \right) \left( \frac{12\,mo}{365\,day} \right) \left( \frac{1\,day}{24\,hr} \right) \left( \frac{1\,hr}{3600\,s} \right) \left( \frac{8\,b}{B} \right) \left( \frac{ 1\,Mb}{10^6\,b} \right)=&nbsp;3.35\,Mbps$$</p>
+<hr />
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-that-really-means-is...">What that really means is&#8230;<a class="anchor-link" href="#What-that-really-means-is...">¶</a></h3><p>Based on this information, the best way to think of the service agreement is&nbsp;as:</p>
+<ul>
+<li><strong>3 Mbps Sustained Data&nbsp;Rate</strong></li>
+<li><strong>200 Mbps Maximum Burst&nbsp;Rate</strong> </li>
+</ul>
+<p>There&#8217;s no indication from the <span class="caps">ISP</span> regarding what the <strong>Maximum Burst Size</strong> might&nbsp;be.</p>
+<hr />
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="1.-Install-speedtest.cli">1. Install <code>speedtest.cli</code><a class="anchor-link" href="#1.-Install-speedtest.cli">¶</a></h3><p>Most people check their home Internet performance by using the <a href="http://speedtest.net">speedtest</a> website, and in fact my <span class="caps">ISP</span> recommends that as&nbsp;well.</p>
+<p>Fortunately there&#8217;s a <span class="caps">CLI</span> version, <a href="https://github.com/sivel/speedtest-cli">speedtest-cli</a>, written by Matt Martz which allows testing to be scripted and&nbsp;automated.</p>
+<p>Installation is&nbsp;simple:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span>sudo apt-get install python-pip
 sudo pip install speedtest-cli
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="2.-Bash-Script"&gt;2. Bash Script&lt;a class="anchor-link" href="#2.-Bash-Script"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Here&amp;#8217;s a simple bash script to run &lt;code&gt;speedtest&lt;/code&gt; and append the results to a&amp;nbsp;file:&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/sh&lt;/span&gt;
-&lt;span class="nv"&gt;TMPFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;mktemp -t speedtest.XXXXXX&lt;span class="sb"&gt;`&lt;/span&gt;
-&lt;span class="nv"&gt;CSVFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/local/speedtest.csv
-&lt;span class="nv"&gt;DATE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;date&lt;span class="k"&gt;)&lt;/span&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="2.-Bash-Script">2. Bash Script<a class="anchor-link" href="#2.-Bash-Script">¶</a></h3><p>Here&#8217;s a simple bash script to run <code>speedtest</code> and append the results to a&nbsp;file:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="nv">TMPFILE</span><span class="o">=</span><span class="sb">`</span>mktemp -t speedtest.XXXXXX<span class="sb">`</span>
+<span class="nv">CSVFILE</span><span class="o">=</span>/var/local/speedtest.csv
+<span class="nv">DATE</span><span class="o">=</span><span class="k">$(</span>date<span class="k">)</span>
 
-/usr/local/bin/speedtest-cli --simple &gt; &lt;span class="nv"&gt;$TMPFILE&lt;/span&gt;
-&lt;span class="nv"&gt;MSG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;cat &lt;span class="nv"&gt;$TMPFILE&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; perl -pe &lt;span class="s1"&gt;'s/^(.*): (.*) (.*?)(\/s)?\n/$2,/m'&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; cut -d&lt;span class="s1"&gt;','&lt;/span&gt; -f &lt;span class="m"&gt;1&lt;/span&gt;-3&lt;span class="sb"&gt;`&lt;/span&gt;
-&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DATE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;,&lt;/span&gt;&lt;span class="nv"&gt;$MSG&lt;/span&gt;&lt;span class="s2"&gt;\n"&lt;/span&gt; &gt;&gt; &lt;span class="nv"&gt;$CSVFILE&lt;/span&gt;
-rm -f &lt;span class="nv"&gt;$TMPFILE&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;This script can be scheduled to run automatically, e.g. every 10 minutes, by adding a &lt;code&gt;crontab&lt;/code&gt; entry that looks like&amp;nbsp;this:&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# execute every 10 minutes&lt;/span&gt;
+/usr/local/bin/speedtest-cli --simple > <span class="nv">$TMPFILE</span>
+<span class="nv">MSG</span><span class="o">=</span><span class="sb">`</span>cat <span class="nv">$TMPFILE</span> <span class="p">|</span> perl -pe <span class="s1">'s/^(.*): (.*) (.*?)(\/s)?\n/$2,/m'</span> <span class="p">|</span> cut -d<span class="s1">','</span> -f <span class="m">1</span>-3<span class="sb">`</span>
+<span class="nb">printf</span> <span class="s2">"</span><span class="si">${</span><span class="nv">DATE</span><span class="si">}</span><span class="s2">,</span><span class="nv">$MSG</span><span class="s2">\n"</span> >> <span class="nv">$CSVFILE</span>
+rm -f <span class="nv">$TMPFILE</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This script can be scheduled to run automatically, e.g. every 10 minutes, by adding a <code>crontab</code> entry that looks like&nbsp;this:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="c1"># execute every 10 minutes</span>
 */10 * * * * /home/pi/bin/speedtest2log.sh
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Note that user &lt;code&gt;pi&lt;/code&gt; needs to have &lt;code&gt;read/write&lt;/code&gt; permissions to the output file(s) (&lt;code&gt;/var/local/speedtest.csv&lt;/code&gt;) for this to&amp;nbsp;work.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Results-and-Analysis"&gt;Results and Analysis&lt;a class="anchor-link" href="#Results-and-Analysis"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;Here&amp;#8217;s some typical output from running the&amp;nbsp;script:&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [1]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;head speedtest.csv
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt"&gt;&lt;/div&gt;
-&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
-&lt;pre&gt;Datetime,Ping_ms,Download_Mbps,Upload_Mbps
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that user <code>pi</code> needs to have <code>read/write</code> permissions to the output file(s) (<code>/var/local/speedtest.csv</code>) for this to&nbsp;work.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Exploring-the-Results">Exploring the Results<a class="anchor-link" href="#Exploring-the-Results">¶</a></h1><p>Here&#8217;s some typical output from running the&nbsp;script:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [1]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>head speedtest.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Datetime,Ping_ms,Download_Mbps,Upload_Mbps
 Sun Jun 18 19:33:44 EDT 2017,24.26,197.99,15.94
 Sun Jun 18 20:45:42 EDT 2017,24.099,189.31,16.47
 Sun Jun 18 21:19:48 EDT 2017,24.066,198.83,16.36
@@ -283,93 +302,93 @@ Sun Jun 18 22:15:01 EDT 2017,21.426,201.61,16.53
 Sun Jun 18 22:30:01 EDT 2017,25.715,175.77,15.84
 Sun Jun 18 22:40:01 EDT 2017,21.751,146.37,16.60
 Sun Jun 18 22:50:01 EDT 2017,22.418,200.60,16.18
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;The Python &lt;a href="http://pandas.pydata.org/"&gt;Pandas Data Analysis Library&lt;/a&gt; is a great tool for analyzing data like this.  Here I&amp;#8217;m using it within a Jupyter&amp;nbsp;notebook.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [2]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;                             &lt;span class="c1"&gt;# system module&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;datetime&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;dt&lt;/span&gt;                  &lt;span class="c1"&gt;# date and time module&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;                    &lt;span class="c1"&gt;# data package&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The Python <a href="http://pandas.pydata.org/">Pandas Data Analysis Library</a> is a great tool for analyzing data like this.  Here I&#8217;m using it within a Jupyter notebook&nbsp;environment.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [2]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>                             <span class="c1"># system module</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>                  <span class="c1"># date and time module</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>                    <span class="c1"># data package</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;mpl&lt;/span&gt;               &lt;span class="c1"&gt;# graphics package&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;        &lt;span class="c1"&gt;# pyplot module&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;seaborn&lt;/span&gt;
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>               <span class="c1"># graphics package</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>        <span class="c1"># pyplot module</span>
+<span class="kn">import</span> <span class="nn">seaborn</span>
 
-&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="k"&gt;matplotlib&lt;/span&gt; inline
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'seaborn-paper'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [3]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# show versions (probably overkill, but why not?)&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Python version:'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Pandas version: '&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Matplotlib version: '&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mpl&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt"&gt;&lt;/div&gt;
-&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
-&lt;pre&gt;Python version: 3.5.2 |Anaconda custom (64-bit)| (default, Jul  2 2016, 17:53:06) 
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">'seaborn-paper'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [3]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># show versions (probably overkill, but why not?)</span>
+<span class="c1">#</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Python version:'</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Pandas version: '</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Matplotlib version: '</span><span class="p">,</span> <span class="n">mpl</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Python version: 3.5.2 |Anaconda custom (64-bit)| (default, Jul  2 2016, 17:53:06) 
 [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)]
 Pandas version:  0.20.1
 Matplotlib version:  2.0.2
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [4]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Read the CSV data file as a dataframe&lt;/span&gt;
-&lt;span class="n"&gt;csvfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'speedtest.csv'&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;csvfile&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rename&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'Download_Mbps'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Download'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                        &lt;span class="s1"&gt;'Upload_Mbps'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Upload'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                        &lt;span class="s1"&gt;'Ping_ms'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Ping'&lt;/span&gt;
-                       &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt"&gt;&lt;/div&gt;
-&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
-&lt;pre&gt;&lt;class 'pandas.core.frame.dataframe'&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [4]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Read the CSV data file as a dataframe</span>
+<span class="n">csvfile</span> <span class="o">=</span> <span class="s1">'speedtest.csv'</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csvfile</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'Download_Mbps'</span><span class="p">:</span> <span class="s1">'Download'</span><span class="p">,</span>
+                        <span class="s1">'Upload_Mbps'</span><span class="p">:</span> <span class="s1">'Upload'</span><span class="p">,</span>
+                        <span class="s1">'Ping_ms'</span><span class="p">:</span> <span class="s1">'Ping'</span>
+                       <span class="p">})</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><class 'pandas.core.frame.dataframe'>
 RangeIndex: 2241 entries, 0 to 2240
 Data columns (total 4 columns):
 Datetime    2241 non-null object
@@ -378,38 +397,38 @@ Download    2241 non-null float64
 Upload      2241 non-null float64
 dtypes: float64(3), object(1)
 memory usage: 70.1+ KB
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Summary-statistics:"&gt;Summary statistics:&lt;a class="anchor-link" href="#Summary-statistics:"&gt;¶&lt;/a&gt;&lt;/h2&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [5]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Using default percentiles&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;describe&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[5]:&lt;/div&gt;
-&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
-&lt;div&gt;
-&lt;style&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary-statistics:">Summary statistics:<a class="anchor-link" href="#Summary-statistics:">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [5]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Using default percentiles</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[5]:</div>
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
     .dataframe thead tr:only-child th {
         text-align: right;
     }
@@ -421,91 +440,91 @@ memory usage: 70.1+ KB
     .dataframe tbody tr th {
         vertical-align: top;
     }
-&lt;/style&gt;
-&lt;table border="1" class="dataframe"&gt;
-&lt;thead&gt;
-&lt;tr style="text-align: right;"&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th&gt;Ping&lt;/th&gt;
-&lt;th&gt;Download&lt;/th&gt;
-&lt;th&gt;Upload&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;th&gt;count&lt;/th&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;mean&lt;/th&gt;
-&lt;td&gt;23.628222&lt;/td&gt;
-&lt;td&gt;183.575756&lt;/td&gt;
-&lt;td&gt;16.652718&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;std&lt;/th&gt;
-&lt;td&gt;2.777095&lt;/td&gt;
-&lt;td&gt;23.106646&lt;/td&gt;
-&lt;td&gt;0.538496&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;min&lt;/th&gt;
-&lt;td&gt;18.972000&lt;/td&gt;
-&lt;td&gt;43.230000&lt;/td&gt;
-&lt;td&gt;7.000000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;25%&lt;/th&gt;
-&lt;td&gt;21.848000&lt;/td&gt;
-&lt;td&gt;172.450000&lt;/td&gt;
-&lt;td&gt;16.440000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;50%&lt;/th&gt;
-&lt;td&gt;22.988000&lt;/td&gt;
-&lt;td&gt;192.370000&lt;/td&gt;
-&lt;td&gt;16.560000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;75%&lt;/th&gt;
-&lt;td&gt;24.528000&lt;/td&gt;
-&lt;td&gt;200.590000&lt;/td&gt;
-&lt;td&gt;16.760000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;max&lt;/th&gt;
-&lt;td&gt;47.549000&lt;/td&gt;
-&lt;td&gt;209.630000&lt;/td&gt;
-&lt;td&gt;19.030000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [6]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Using custom percentiles&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;describe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;percentiles&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;0.05&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.70&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.9&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[6]:&lt;/div&gt;
-&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
-&lt;div&gt;
-&lt;style&gt;
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Ping</th>
+<th>Download</th>
+<th>Upload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>count</th>
+<td>2241.000000</td>
+<td>2241.000000</td>
+<td>2241.000000</td>
+</tr>
+<tr>
+<th>mean</th>
+<td>23.628222</td>
+<td>183.575756</td>
+<td>16.652718</td>
+</tr>
+<tr>
+<th>std</th>
+<td>2.777095</td>
+<td>23.106646</td>
+<td>0.538496</td>
+</tr>
+<tr>
+<th>min</th>
+<td>18.972000</td>
+<td>43.230000</td>
+<td>7.000000</td>
+</tr>
+<tr>
+<th>25%</th>
+<td>21.848000</td>
+<td>172.450000</td>
+<td>16.440000</td>
+</tr>
+<tr>
+<th>50%</th>
+<td>22.988000</td>
+<td>192.370000</td>
+<td>16.560000</td>
+</tr>
+<tr>
+<th>75%</th>
+<td>24.528000</td>
+<td>200.590000</td>
+<td>16.760000</td>
+</tr>
+<tr>
+<th>max</th>
+<td>47.549000</td>
+<td>209.630000</td>
+<td>19.030000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [6]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Using custom percentiles</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">percentiles</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.70</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[6]:</div>
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
     .dataframe thead tr:only-child th {
         text-align: right;
     }
@@ -517,241 +536,241 @@ memory usage: 70.1+ KB
     .dataframe tbody tr th {
         vertical-align: top;
     }
-&lt;/style&gt;
-&lt;table border="1" class="dataframe"&gt;
-&lt;thead&gt;
-&lt;tr style="text-align: right;"&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th&gt;Ping&lt;/th&gt;
-&lt;th&gt;Download&lt;/th&gt;
-&lt;th&gt;Upload&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;th&gt;count&lt;/th&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;mean&lt;/th&gt;
-&lt;td&gt;23.628222&lt;/td&gt;
-&lt;td&gt;183.575756&lt;/td&gt;
-&lt;td&gt;16.652718&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;std&lt;/th&gt;
-&lt;td&gt;2.777095&lt;/td&gt;
-&lt;td&gt;23.106646&lt;/td&gt;
-&lt;td&gt;0.538496&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;min&lt;/th&gt;
-&lt;td&gt;18.972000&lt;/td&gt;
-&lt;td&gt;43.230000&lt;/td&gt;
-&lt;td&gt;7.000000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;5%&lt;/th&gt;
-&lt;td&gt;20.658000&lt;/td&gt;
-&lt;td&gt;136.060000&lt;/td&gt;
-&lt;td&gt;16.310000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;10%&lt;/th&gt;
-&lt;td&gt;21.056000&lt;/td&gt;
-&lt;td&gt;148.900000&lt;/td&gt;
-&lt;td&gt;16.360000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;50%&lt;/th&gt;
-&lt;td&gt;22.988000&lt;/td&gt;
-&lt;td&gt;192.370000&lt;/td&gt;
-&lt;td&gt;16.560000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;60%&lt;/th&gt;
-&lt;td&gt;23.527000&lt;/td&gt;
-&lt;td&gt;198.260000&lt;/td&gt;
-&lt;td&gt;16.620000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;70%&lt;/th&gt;
-&lt;td&gt;24.125000&lt;/td&gt;
-&lt;td&gt;200.000000&lt;/td&gt;
-&lt;td&gt;16.700000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;80%&lt;/th&gt;
-&lt;td&gt;25.137000&lt;/td&gt;
-&lt;td&gt;201.290000&lt;/td&gt;
-&lt;td&gt;16.860000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;90%&lt;/th&gt;
-&lt;td&gt;27.078000&lt;/td&gt;
-&lt;td&gt;203.060000&lt;/td&gt;
-&lt;td&gt;17.240000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;max&lt;/th&gt;
-&lt;td&gt;47.549000&lt;/td&gt;
-&lt;td&gt;209.630000&lt;/td&gt;
-&lt;td&gt;19.030000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Download-Performace"&gt;Download Performace&lt;a class="anchor-link" href="#Download-Performace"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Mean Download rate is 183&amp;nbsp;Mbps&lt;/li&gt;
-&lt;li&gt;Median Download rate is 192&amp;nbsp;Mbps&lt;/li&gt;
-&lt;li&gt;70% of download measurements are equal or less than the advertised peak rate (200&amp;nbsp;Mbps)&lt;/li&gt;
-&lt;li&gt;5% of download measurements are less than 136&amp;nbsp;Mbps&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="Upload-Performance"&gt;Upload Performance&lt;a class="anchor-link" href="#Upload-Performance"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Mean Upload rate is 16.6&amp;nbsp;Mbps&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Fewer-than-1%-of-Download-measurements-are-below-100-Mb/s"&gt;Fewer than 1% of Download measurements are below 100 Mb/s&lt;a class="anchor-link" href="#Fewer-than-1%-of-Download-measurements-are-below-100-Mb/s"&gt;¶&lt;/a&gt;&lt;/h3&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [7]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Download'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&lt;&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Download'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[7]:&lt;/div&gt;
-&lt;div class="output_text output_subarea output_execute_result"&gt;
-&lt;pre&gt;Datetime    0.004462
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Ping</th>
+<th>Download</th>
+<th>Upload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>count</th>
+<td>2241.000000</td>
+<td>2241.000000</td>
+<td>2241.000000</td>
+</tr>
+<tr>
+<th>mean</th>
+<td>23.628222</td>
+<td>183.575756</td>
+<td>16.652718</td>
+</tr>
+<tr>
+<th>std</th>
+<td>2.777095</td>
+<td>23.106646</td>
+<td>0.538496</td>
+</tr>
+<tr>
+<th>min</th>
+<td>18.972000</td>
+<td>43.230000</td>
+<td>7.000000</td>
+</tr>
+<tr>
+<th>5%</th>
+<td>20.658000</td>
+<td>136.060000</td>
+<td>16.310000</td>
+</tr>
+<tr>
+<th>10%</th>
+<td>21.056000</td>
+<td>148.900000</td>
+<td>16.360000</td>
+</tr>
+<tr>
+<th>50%</th>
+<td>22.988000</td>
+<td>192.370000</td>
+<td>16.560000</td>
+</tr>
+<tr>
+<th>60%</th>
+<td>23.527000</td>
+<td>198.260000</td>
+<td>16.620000</td>
+</tr>
+<tr>
+<th>70%</th>
+<td>24.125000</td>
+<td>200.000000</td>
+<td>16.700000</td>
+</tr>
+<tr>
+<th>80%</th>
+<td>25.137000</td>
+<td>201.290000</td>
+<td>16.860000</td>
+</tr>
+<tr>
+<th>90%</th>
+<td>27.078000</td>
+<td>203.060000</td>
+<td>17.240000</td>
+</tr>
+<tr>
+<th>max</th>
+<td>47.549000</td>
+<td>209.630000</td>
+<td>19.030000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Download-Performace">Download Performace<a class="anchor-link" href="#Download-Performace">¶</a></h3><ul>
+<li>Mean Download rate is 183&nbsp;Mbps</li>
+<li>Median Download rate is 192&nbsp;Mbps</li>
+<li>70% of download measurements are equal or less than the advertised peak rate (200&nbsp;Mbps)</li>
+<li>5% of download measurements are less than 136&nbsp;Mbps</li>
+</ul>
+<h3 id="Upload-Performance">Upload Performance<a class="anchor-link" href="#Upload-Performance">¶</a></h3><ul>
+<li>Mean Upload rate is 16.6&nbsp;Mbps</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fewer-than-1%-of-Download-measurements-are-below-100-Mb/s">Fewer than 1% of Download measurements are below 100 Mb/s<a class="anchor-link" href="#Fewer-than-1%-of-Download-measurements-are-below-100-Mb/s">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [7]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'Download'</span><span class="p">]</span> <span class="o"><</span> <span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Download'</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[7]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>Datetime    0.004462
 Ping        0.004462
 Download    0.004462
 Upload      0.004462
-dtype: float64&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Upload-performance-is-even-better,-relative-to-the-advertised-rate-(15-Mb/s)"&gt;Upload performance is even better, relative to the advertised rate (15 Mb/s)&lt;a class="anchor-link" href="#Upload-performance-is-even-better,-relative-to-the-advertised-rate-(15-Mb/s)"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Fewer than 1% of upload measurements are below 15&amp;nbsp;Mb/s&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [8]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Upload'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&lt;&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Upload'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[8]:&lt;/div&gt;
-&lt;div class="output_text output_subarea output_execute_result"&gt;
-&lt;pre&gt;Datetime    0.005355
+dtype: float64</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Upload-performance-is-even-better,-relative-to-the-advertised-rate-(15-Mb/s)">Upload performance is even better, relative to the advertised rate (15 Mb/s)<a class="anchor-link" href="#Upload-performance-is-even-better,-relative-to-the-advertised-rate-(15-Mb/s)">¶</a></h3><p>Fewer than 1% of upload measurements are below 15&nbsp;Mb/s</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [8]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'Upload'</span><span class="p">]</span> <span class="o"><</span> <span class="mi">15</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Upload'</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[8]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>Datetime    0.005355
 Ping        0.005355
 Download    0.005355
 Upload      0.005355
-dtype: float64&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Add-a-datetime-column"&gt;Add a &lt;code&gt;datetime&lt;/code&gt; column&lt;a class="anchor-link" href="#Add-a-datetime-column"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;The original &lt;code&gt;Datetime&lt;/code&gt; column was interpreted by pandas as a string type object.  Let&amp;#8217;s add a new column of type &lt;code&gt;datetime&lt;/code&gt; to facilitate analyzing as a&amp;nbsp;timeseries.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [9]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rename&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'Datetime'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Date'&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="n"&gt;df2&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'datetime'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_datetime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df2&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Date'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-&lt;span class="n"&gt;df2&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'HourOfDay'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df2&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'datetime'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hour&lt;/span&gt;
+dtype: float64</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Add-a-datetime-column">Add a <code>datetime</code> column<a class="anchor-link" href="#Add-a-datetime-column">¶</a></h1><p>The original <code>Datetime</code> column was interpreted by pandas as a string type object.  Let&#8217;s add a new column of type <code>datetime</code> to facilitate analyzing as a&nbsp;timeseries.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [9]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'Datetime'</span><span class="p">:</span> <span class="s1">'Date'</span><span class="p">})</span>
+<span class="n">df2</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">'Date'</span><span class="p">])</span>
+<span class="n">df2</span><span class="p">[</span><span class="s1">'HourOfDay'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
 
-&lt;span class="c1"&gt;# set index to the `datetime` field&lt;/span&gt;
-&lt;span class="n"&gt;df3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'datetime'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Datetime'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Plotting-the-data"&gt;Plotting the data&lt;a class="anchor-link" href="#Plotting-the-data"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;Plotting the results provides a visual sense of the&amp;nbsp;data.&lt;/p&gt;
-&lt;h1 id="Scatter-Plot"&gt;Scatter Plot&lt;a class="anchor-link" href="#Scatter-Plot"&gt;¶&lt;/a&gt;&lt;/h1&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [10]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# specify plot size (width, height) in inches, and resolution (DPI)&lt;/span&gt;
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;figure&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;dpi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Datetime'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Download'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="s1"&gt;'.'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'black'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Datetime'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Upload'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="s1"&gt;'.'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'red'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Datetime'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ylabel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Mbps'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Througput (as reported by speedtest)'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;legend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'best'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[10]:&lt;/div&gt;
-&lt;div class="output_text output_subarea output_execute_result"&gt;
-&lt;pre&gt;&lt;matplotlib.legend.legend at 0x7f5d2a03ab38&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt"&gt;&lt;/div&gt;
-&lt;div class="output_png output_subarea "&gt;
-&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqwAAAF2CAYAAACrj8rkAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+<span class="c1"># set index to the `datetime` field</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span>
+<span class="n">df3</span><span class="p">[</span><span class="s1">'Datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Plotting-the-data">Plotting the data<a class="anchor-link" href="#Plotting-the-data">¶</a></h1><p>Plotting helps make sense of the&nbsp;numbers.</p>
+<h1 id="Scatter-Plot">Scatter Plot<a class="anchor-link" href="#Scatter-Plot">¶</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [10]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># specify plot size (width, height) in inches, and resolution (DPI)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df3</span><span class="p">[</span><span class="s1">'Datetime'</span><span class="p">],</span> <span class="n">df3</span><span class="p">[</span><span class="s1">'Download'</span><span class="p">],</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df3</span><span class="p">[</span><span class="s1">'Datetime'</span><span class="p">],</span> <span class="n">df3</span><span class="p">[</span><span class="s1">'Upload'</span><span class="p">],</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Datetime'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Mbps'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Througput (as reported by speedtest)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">'best'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[10]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre><matplotlib.legend.legend at 0x7f25d48b7b70></pre>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqwAAAF2CAYAAACrj8rkAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAAPYQAAD2EBqD+naQAAIABJREFUeJzsnXt4VNW5/z8zmWFMW/urgE3weKVtVhJFqFYlgqiIIoiV
 CGLFggYjAooeaNW20oJKj0c5BRUasARDoYg3IAjIReQiyq2oIClhIeKtaoKA5xy1nGEms39/zOzN
 3jN7bslOZhLW53l4yMzsy9prr8t3vetd73JpmoZCoVAoFAqFQpGtuDOdAIVCoVAoFAqFIhFKsCoU
@@ -1385,52 +1404,52 @@ oc/uAMYaYyxwL04iO9QYcyuwFKgA1uBcAZsI/MYY0wA8Dzxtrf0Kpy9qI7DWGFOVYRsvAA4IteNt
 nBEE3spwWSIiWaVhrURERETE11RhFRERERFfU8IqIiIiIr6mhFVEREREfE0Jq4iIiIj4mhJWERER
 EfE1JawiIiIi4mtKWEVERETE15SwioiIiIivKWEVEREREV9TwioiIiIivqaEVURERER87f8D1N7R
 JdnlGQQAAAAASUVORK5CYII=
-" /&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Histogram"&gt;Histogram&lt;a class="anchor-link" href="#Histogram"&gt;¶&lt;/a&gt;&lt;/h1&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [11]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# First create a grid of plots&lt;/span&gt;
-&lt;span class="c1"&gt;# ax will be an array of two Axes objects&lt;/span&gt;
-&lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;dpi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Histogram">Histogram<a class="anchor-link" href="#Histogram">¶</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [11]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># First create a grid of plots</span>
+<span class="c1"># ax will be an array of two Axes objects</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
-&lt;span class="c1"&gt;# Call hist() method on the appropriate axis object&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Download'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;bins&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;normed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_ylabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Download'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+<span class="c1"># Call hist() method on the appropriate axis object</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df3</span><span class="p">[</span><span class="s1">'Download'</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Download'</span><span class="p">)</span>
 
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Upload'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;bins&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;normed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_ylabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Upload'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Mbps'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[11]:&lt;/div&gt;
-&lt;div class="output_text output_subarea output_execute_result"&gt;
-&lt;pre&gt;&lt;matplotlib.text.text at 0x7f5d29f174e0&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt"&gt;&lt;/div&gt;
-&lt;div class="output_png output_subarea "&gt;
-&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArUAAAH8CAYAAADPH1d4AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df3</span><span class="p">[</span><span class="s1">'Upload'</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Upload'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Mbps'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[11]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre><matplotlib.text.text at 0x7f25d4795630></pre>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArUAAAH8CAYAAADPH1d4AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAAPYQAAD2EBqD+naQAAIABJREFUeJzt3X+UJWV97/v3ZlAJkxGZGQjgTELQ8I1iTHKyRK4EQWP0
 Dlx/oDFrwIwHMCY3eCAg5xq5egwYNOSHGbIkGDj8lgM5mBAEgoiAI3KUmaOS4K98uQEJxAzCzOA4
 IYMI0/ePqk22bU/37qa6aj+736+1ZtFVz95VT327uvnsp5+q6k1MTCBJkiSVbJeuOyBJkiQ9U4Za
@@ -1674,47 +1693,47 @@ Oy9JLTLUStLouwL4emZ+ZyftX4+Iu4AvAh/OzH+s1/8LcFBEfJNqqsHx9XSEC4APR8Q/At+o33fr
 vB6BJM2z3sSEH84ladzUt/S6NDP377grktQKR2olSZJUPEOtJEmSiuf0A0mSJBXPkVpJkiQVz1Ar
 SZKk4hlqJUmSVDxDrSRJkopnqJUkSVLxDLWSJEkqnqFWkiRJxTPUSpIkqXiGWkmSJBXv/wdi6rJm
 DV+aiwAAAABJRU5ErkJggg==
-" /&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Cumulative-Distribution"&gt;Cumulative Distribution&lt;a class="anchor-link" href="#Cumulative-Distribution"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;Another interesting thing to see is a cumulative distribution function.  This shows the probability of finding a number in a bin or any lower bin.  This is as simple as adding a single flag to the &lt;code&gt;hist()&lt;/code&gt; call.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [12]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Download &lt;/span&gt;
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;figure&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;dpi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Download'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;bins&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;normed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cumulative&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Mbps'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Download Throughput'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[12]:&lt;/div&gt;
-&lt;div class="output_text output_subarea output_execute_result"&gt;
-&lt;pre&gt;[&lt;matplotlib.text.text at 0x7f5d29e86a58&gt;,
- &lt;matplotlib.text.text at 0x7f5d29e0afd0&gt;]&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt"&gt;&lt;/div&gt;
-&lt;div class="output_png output_subarea "&gt;
-&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApcAAAF2CAYAAAA7nLMrAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Cumulative-Distribution">Cumulative Distribution<a class="anchor-link" href="#Cumulative-Distribution">¶</a></h1><p>Another interesting thing to see is a cumulative distribution function.  This shows the probability of finding a number in a bin or any lower bin.  This is as simple as adding a single flag to the <code>hist()</code> call.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [12]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Download </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df3</span><span class="p">[</span><span class="s1">'Download'</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cumulative</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Mbps'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Download Throughput'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[12]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[<matplotlib.text.text at 0x7f25d470add8>,
+ <matplotlib.text.text at 0x7f25d468b160>]</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApcAAAF2CAYAAAA7nLMrAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAAPYQAAD2EBqD+naQAAHURJREFUeJzt3Xm0ZWdZJ+DfpWJDE0BSVdEQEzoNNC+QBgFXR7ohgIKy
 ICKTaECgSZikFWToRZslKihKbJcmLhQEw9CQBmVqCKMCIcZ0Q1AZZXhRpkQIkKQgliFMye0/zr54
 uNRwT+qrukOeZ61a6+zhnP3u9+5z6ne/vfc9S8vLywEAgBGut94FAACwdQiXAAAMI1wCADCMcAkA
@@ -1848,39 +1867,39 @@ Mc3/VJIvJlkeXjzAISRcAqzd2Uk+2t1f2svyj1bVB5K8J8nvdPcnpvn/lOT4qvp4ZqfAT5lOk78o
 ye9U1SeSfGx63rsO6h4AHGRLy8t+SQY4WKY/RfSy7j5unUsBOCSMXAIAMIxwCQDAME6LAwAwjJFL
 AACGES4BABhGuAQAYBjhEgCAYYRLAACGES4BABhGuAQAYBjhEgCAYf4/jJuAj4DSLQAAAAAASUVO
 RK5CYII=
-" /&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [13]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Upload&lt;/span&gt;
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;figure&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;dpi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Upload'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;bins&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;normed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cumulative&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'green'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Mbps'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Upload Throughput'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[13]:&lt;/div&gt;
-&lt;div class="output_text output_subarea output_execute_result"&gt;
-&lt;pre&gt;[&lt;matplotlib.text.text at 0x7f5d29d86898&gt;,
- &lt;matplotlib.text.text at 0x7f5d29db9208&gt;]&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt"&gt;&lt;/div&gt;
-&lt;div class="output_png output_subarea "&gt;
-&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApcAAAF2CAYAAAA7nLMrAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [13]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Upload</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df3</span><span class="p">[</span><span class="s1">'Upload'</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cumulative</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Mbps'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Upload Throughput'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[13]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[<matplotlib.text.text at 0x7f25d44be3c8>,
+ <matplotlib.text.text at 0x7f25d4635320>]</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApcAAAF2CAYAAAA7nLMrAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAAPYQAAD2EBqD+naQAAGsVJREFUeJzt3X2wZGV9J/DvdWZXBEGZGRAJWKgJj8qaGNwlrGAwicYS
 yihxMWDE1WA0biJCTJlQa1bIqmXKTSCbiIL4kshqgi6FiG9ZUILsKpQbI77gz12VQNxBYAZxCkEj
 3P2jz7Xa67zcZp7bfe+dz+evPuc8ffrXv+nu+d7nnNM9Nz8/HwAA6OFBsy4AAIC1Q7gEAKAb4RIA
@@ -2002,44 +2021,47 @@ IlwCLEFVVZKtGQXAv9nBsBcnyXChzrFJrhnWPzjJKcPtZyf5TpKvttYubK09Y1j/tSS3JpnvXjzA
 FAmXAEt3cZIvVdW3drD9S621zyX5dJI3VtVXhvX/lOSI1tqNGR0Cf8lwmPzCJG9srX0lyZeH+121
 rM8AYJnNzc/7IxlguQxfRfTuqjpsxqUATIWZSwAAuhEuAQDoxmFxAAC6MXMJAEA3wiUAAN0IlwAA
 dCNcAgDQjXAJAEA3wiUAAN0IlwAAdCNcAgDQzf8HdDmkgzZD6mUAAAAASUVORK5CYII=
-" /&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Checking-for-patterns-of-intraday-variation"&gt;Checking for patterns of intraday variation&lt;a class="anchor-link" href="#Checking-for-patterns-of-intraday-variation"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;Group observations by Hour-of-Day to look for variations in performance over the course of the&amp;nbsp;day.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [14]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Datetime'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'HourOfDay'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Download'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;figure&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;dpi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;boxplot&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[14]:&lt;/div&gt;
-&lt;div class="output_text output_subarea output_execute_result"&gt;
-&lt;pre&gt;&lt;matplotlib.axes._subplots.axessubplot at 0x7f5d2c7043c8&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt"&gt;&lt;/div&gt;
-&lt;div class="output_png output_subarea "&gt;
-&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApoAAAEICAYAAAD/SlQqAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Checking-for-patterns-of-intraday-variation">Checking for patterns of intraday variation<a class="anchor-link" href="#Checking-for-patterns-of-intraday-variation">¶</a></h1><p>Sometimes residential customers experience network slowdowns during peak times, when many people in the area are using the network at the same time. This is especially common for customers of cable providers because the backhaul network is typically shared among a users in a&nbsp;neighborhood.</p>
+<p>Regular periodic maintenance windows might also affect throughput, though those are scheduled for off-peak hours (e.g. early morning hours), so shouldn&#8217;t daytime&nbsp;performance.</p>
+<p>We can look for these patterns by grouping observations by Hour-of-Day and looking for variations over the course of the&nbsp;day.</p>
+<p>Matplotlib provides a &#8220;box and whisker plot&#8221;, where the box extends from the lower to upper quartile values of the data, with a line at the median. The whiskers extend from the box to show the range of the&nbsp;data.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [14]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">'Datetime'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'HourOfDay'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Download'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">boxplot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[14]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre><matplotlib.axes._subplots.axessubplot at 0x7f26096b5e48></pre>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApoAAAEICAYAAAD/SlQqAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAAPYQAAD2EBqD+naQAAIABJREFUeJzt3XuYZHV95/F3TTMwzjDMMN0EmDCKLOs3YuJG47pEYsDL
 xsdFjZc1YdngeomQGyar2axsshGzMa7JE3cTCS4YFsMaiTfkkqyuRkWSXcEYMd7iV0GFAYaR6Waa
 YYaBufT+carHmu6q7q7qc05XnXm/nmeenrqdT/1O/c7vfM+tqjUzM4MkSZJUtlUr/QYkSZLUTBaa
@@ -2211,45 +2233,45 @@ IxSf1c8PmrFQTtlj5gLt+QJwW0TsAh5mGd+ssUDGrwB/FhH/mfbXGw3ekkXn2RaK9dyyLdCeXwJu
 iIi9FOvT11aUcxnwyYjYB9xCcXXzoLquMyl5HFggJyhxHOiR8xngJZQ4DvTI+SQljwOzWjMzI38K
 kyRJkobQqB86lyRJ0pCy0JQkSVIlLDQlSZJUCQtNSZIkVcJCU5IkSZWw0JQkSVIlLDQlSZJUCQtN
 SZIkVcJCU5IkSZWw0JQkSVIlLDQlSZJUif8PB7eB+FyCiHIAAAAASUVORK5CYII=
-" /&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;There are no obvious patterns shown in the hourly box&amp;nbsp;plot.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Conclusion"&gt;Conclusion&lt;a class="anchor-link" href="#Conclusion"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;Recalling the measured performance summary statistics for&amp;nbsp;convenience:&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [15]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;describe&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-&lt;div class="output_area"&gt;
-&lt;div class="prompt output_prompt"&gt;Out[15]:&lt;/div&gt;
-&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
-&lt;div&gt;
-&lt;style&gt;
+" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are no obvious patterns shown in the hourly box&nbsp;plot.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h1><p>Recall the measured performance summary statistics for&nbsp;convenience:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [15]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[15]:</div>
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
     .dataframe thead tr:only-child th {
         text-align: right;
     }
@@ -2261,95 +2283,95 @@ SZIkVcJCU5IkSZWw0JQkSVIlLDQlSZJUif8PB7eB+FyCiHIAAAAASUVORK5CYII=
     .dataframe tbody tr th {
         vertical-align: top;
     }
-&lt;/style&gt;
-&lt;table border="1" class="dataframe"&gt;
-&lt;thead&gt;
-&lt;tr style="text-align: right;"&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th&gt;Ping&lt;/th&gt;
-&lt;th&gt;Download&lt;/th&gt;
-&lt;th&gt;Upload&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;th&gt;count&lt;/th&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;td&gt;2241.000000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;mean&lt;/th&gt;
-&lt;td&gt;23.628222&lt;/td&gt;
-&lt;td&gt;183.575756&lt;/td&gt;
-&lt;td&gt;16.652718&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;std&lt;/th&gt;
-&lt;td&gt;2.777095&lt;/td&gt;
-&lt;td&gt;23.106646&lt;/td&gt;
-&lt;td&gt;0.538496&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;min&lt;/th&gt;
-&lt;td&gt;18.972000&lt;/td&gt;
-&lt;td&gt;43.230000&lt;/td&gt;
-&lt;td&gt;7.000000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;25%&lt;/th&gt;
-&lt;td&gt;21.848000&lt;/td&gt;
-&lt;td&gt;172.450000&lt;/td&gt;
-&lt;td&gt;16.440000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;50%&lt;/th&gt;
-&lt;td&gt;22.988000&lt;/td&gt;
-&lt;td&gt;192.370000&lt;/td&gt;
-&lt;td&gt;16.560000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;75%&lt;/th&gt;
-&lt;td&gt;24.528000&lt;/td&gt;
-&lt;td&gt;200.590000&lt;/td&gt;
-&lt;td&gt;16.760000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;max&lt;/th&gt;
-&lt;td&gt;47.549000&lt;/td&gt;
-&lt;td&gt;209.630000&lt;/td&gt;
-&lt;td&gt;19.030000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Answering-the-original-question"&gt;Answering the original question&lt;a class="anchor-link" href="#Answering-the-original-question"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="Upload-performance-is-remarkably-good."&gt;Upload performance is remarkably good.&lt;a class="anchor-link" href="#Upload-performance-is-remarkably-good."&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;This is mainly relevant when doing off-site backups or sending large&amp;nbsp;files.&lt;/p&gt;
-&lt;h3 id="Download-performance-is-pretty-respectable,-too."&gt;Download performance is pretty respectable, too.&lt;a class="anchor-link" href="#Download-performance-is-pretty-respectable,-too."&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Half of all Downloads measured 192 Mbps or better; 40% measured 198 Mbps or better.  Only 10 of over 2000 Download measurements (0.4%) are below 100&amp;nbsp;Mbps.&lt;/p&gt;
-&lt;p&gt;Given that the effective offered Download performance is &lt;strong&gt;200 Mbps Peak, 3 Mbps Sustained&lt;/strong&gt;, a Mean Download rate of 183 Mbps and Minimum of 43 Mbps is really quite respectable. This may not be acceptable for a &lt;em&gt;Business Class&lt;/em&gt; customer, but for home/home-office use, the results show consistently good&amp;nbsp;performance.&lt;/p&gt;
-&lt;p&gt;These results indicates to me that whatever issues were affecting my wife&amp;#8217;s work are more likely to be found by looking somewhere else, perhaps at the &lt;span class="caps"&gt;VPN&lt;/span&gt;, or the host &lt;span class="caps"&gt;PC&lt;/span&gt;&amp;nbsp;applications.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Latency to the speedtest server looks reasonable, too,&lt;/strong&gt; though &lt;code&gt;speedtest&lt;/code&gt; absolutely isn&amp;#8217;t the best way to measure&amp;nbsp;latency.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h1 id="Next-steps"&gt;Next steps&lt;a class="anchor-link" href="#Next-steps"&gt;¶&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;Working on this performance question got me thinking about practical approaches for &lt;strong&gt;&lt;em&gt;continuous monitoring&lt;/em&gt;&lt;/strong&gt; of networks and servers.  I&amp;#8217;ve been working with several tools and approaches which I plan to discuss in another&amp;nbsp;post.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Ping</th>
+<th>Download</th>
+<th>Upload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>count</th>
+<td>2241.000000</td>
+<td>2241.000000</td>
+<td>2241.000000</td>
+</tr>
+<tr>
+<th>mean</th>
+<td>23.628222</td>
+<td>183.575756</td>
+<td>16.652718</td>
+</tr>
+<tr>
+<th>std</th>
+<td>2.777095</td>
+<td>23.106646</td>
+<td>0.538496</td>
+</tr>
+<tr>
+<th>min</th>
+<td>18.972000</td>
+<td>43.230000</td>
+<td>7.000000</td>
+</tr>
+<tr>
+<th>25%</th>
+<td>21.848000</td>
+<td>172.450000</td>
+<td>16.440000</td>
+</tr>
+<tr>
+<th>50%</th>
+<td>22.988000</td>
+<td>192.370000</td>
+<td>16.560000</td>
+</tr>
+<tr>
+<th>75%</th>
+<td>24.528000</td>
+<td>200.590000</td>
+<td>16.760000</td>
+</tr>
+<tr>
+<th>max</th>
+<td>47.549000</td>
+<td>209.630000</td>
+<td>19.030000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Answering-the-original-question">Answering the original question<a class="anchor-link" href="#Answering-the-original-question">¶</a></h2><h3 id="Upload-performance-is-remarkably-good.">Upload performance is remarkably good.<a class="anchor-link" href="#Upload-performance-is-remarkably-good.">¶</a></h3><p>This is mainly relevant when doing off-site backups or sending large&nbsp;files.</p>
+<h3 id="Download-performance-is-pretty-respectable,-too.">Download performance is pretty respectable, too.<a class="anchor-link" href="#Download-performance-is-pretty-respectable,-too.">¶</a></h3><p>Half of all Downloads measured 192 Mbps or better; 40% measured 198 Mbps or better.  Only 10 of over 2000 Download measurements (0.4%) are below 100&nbsp;Mbps.</p>
+<p>Given that the effective offered Download performance is <strong>200 Mbps Peak, 3 Mbps Sustained</strong>, a Mean Download rate of 183 Mbps and Minimum of 43 Mbps is really quite respectable. This may not be acceptable for a <em>Business Class</em> customer, but for home/home-office use, the results show consistently good&nbsp;performance.</p>
+<p>These results indicates to me that whatever issues were affecting my wife&#8217;s work are more likely to be found by looking somewhere else, perhaps at the <span class="caps">VPN</span>, or the host <span class="caps">PC</span>&nbsp;applications.</p>
+<p><strong>Latency to the speedtest server looks reasonable, too,</strong> though <code>speedtest</code> absolutely isn&#8217;t the best way to measure&nbsp;latency.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Next-steps">Next steps<a class="anchor-link" href="#Next-steps">¶</a></h1><p>Working on this performance question got me thinking about practical approaches for <strong><em>continuous monitoring</em></strong> of networks and servers.  I&#8217;ve been evaluating several tools and approaches which I plan to discuss in another&nbsp;post.</p>
+</div>
+</div>
+</div>
 
-&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
@@ -2376,130 +2398,148 @@ SZIkVcJCU5IkSZWw0JQkSVIlLDQlSZJUif8PB7eB+FyCiHIAAAAASUVORK5CYII=
         "}); ";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;
-</content><category term="python"></category><category term="data analysis"></category><category term="raspberry pi"></category></entry><entry><title>Notes on Installing VirtualBox and Vagrant on Ubuntu 14.04</title><link href="https://rcyphers.github.io/vagrant-virtualBox-installation.html" rel="alternate"></link><published>2016-02-26T20:36:23-05:00</published><updated>2017-09-08T13:00:43-04:00</updated><author><name>rcyphers</name></author><id>tag:rcyphers.github.io,2016-02-26:/vagrant-virtualBox-installation.html</id><summary type="html">&lt;p&gt;Notes on Installing VirtualBox and&amp;nbsp;Vagrant&lt;/p&gt;</summary><content type="html">&lt;hr&gt;
-&lt;p&gt;created: &lt;em&gt;Fri Feb 26 20:36:23 &lt;span class="caps"&gt;EST&lt;/span&gt; 2016&lt;/em&gt;&lt;br&gt;
-updated: &lt;em&gt;Fri Sep  8 13:00:43 &lt;span class="caps"&gt;EDT&lt;/span&gt;&amp;nbsp;2017&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Tested&amp;nbsp;on:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;VirtualBox v5.0.14, Vagrant v1.8.1 on Ubuntu 14.04.4 &lt;span class="caps"&gt;LTS&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;VirtualBox v5.1.26, Vagrant v2.0.0 on Ubuntu 14.04.5 &lt;span class="caps"&gt;LTS&lt;/span&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;These are notes for how to install VirtualBox and Vagrant on&amp;nbsp;Ubuntu.&lt;/p&gt;
-&lt;h1&gt;Installing&amp;nbsp;VirtualBox&lt;/h1&gt;
-&lt;p&gt;VirtualBox is a tool that allows you to create virtual computers running their own operating system within which you can safely experiment without breaking your actual&amp;nbsp;computer.&lt;/p&gt;
-&lt;p&gt;VirtualBox is free (as in beer) and open source, and you can find more information at &lt;a href="https://www.virtualbox.org"&gt;VirtualBox.org&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Instructions for Installing VirtualBox on Debian-based Linux&amp;nbsp;Distributions&lt;/h2&gt;
-&lt;h3&gt;1. Download&amp;nbsp;VirtualBox&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://www.virtualbox.org/wiki/Downloads"&gt;Here&lt;/a&gt; you will find links to VirtualBox binaries and its source&amp;nbsp;code.&lt;/p&gt;
-&lt;p&gt;Add the following line to your &lt;code&gt;/etc/apt/sources.list&lt;/code&gt;: &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;deb&lt;/span&gt; &lt;span class="s"&gt;http://download.virtualbox.org/virtualbox/debian&lt;/span&gt; &lt;span class="kp"&gt;yakkety&lt;/span&gt; &lt;span class="kp"&gt;contrib&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+</script>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://www.linkedin.com/in/rcyphers"><i class="fa fa-linkedin-square fa-lg"></i> LinkedIn</a></li>
+                <li class="list-group-item"><a href="https://github.com/rcyphers"><i class="fa fa-github-square fa-lg"></i> GitHub</a></li>
+              </ul>
+            </li>
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="/pelican-install-notes.html">
+                            Pelican Quickstart: Install Pelican on Ubuntu&nbsp;16.04
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/ISP-perf-check.html">
+                            Verifying <span class="caps">ISP</span> performance with Raspberry Pi and&nbsp;pandas
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/vagrant-virtualBox-install-notes.html">
+                            Notes on Installing VirtualBox and Vagrant on Ubuntu&nbsp;14.04
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
 
-&lt;p&gt;Note: &lt;em&gt;According to your distribution, replace &lt;code&gt;yakkety&lt;/code&gt; by &lt;code&gt;xenial&lt;/code&gt;, &lt;code&gt;vivid&lt;/code&gt;, &lt;code&gt;utopic&lt;/code&gt;, &lt;code&gt;trusty&lt;/code&gt;, &lt;code&gt;raring&lt;/code&gt;, &lt;code&gt;quantal&lt;/code&gt;, &lt;code&gt;precise&lt;/code&gt;, &lt;code&gt;lucid&lt;/code&gt;, &lt;code&gt;jessie&lt;/code&gt;, &lt;code&gt;wheezy&lt;/code&gt;, or &lt;code&gt;squeeze&lt;/code&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;h3&gt;2. Add the security&amp;nbsp;key&lt;/h3&gt;
-&lt;p&gt;The Oracle public key for apt-secure can be downloaded
-&lt;a href="https://www.virtualbox.org/download/oracle_vbox_2016.asc"&gt;here&lt;/a&gt; for Debian 8 (&amp;#8220;Jessie&amp;#8221;) / Ubuntu 16.04 (&amp;#8220;Xenial&amp;#8221;) and later.  You can add these keys&amp;nbsp;with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-key add oracle_vbox_2016.asc
-&lt;/pre&gt;&lt;/div&gt;
+            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group list-inline tagcloud" id="tags">
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/data-analysis.html">
+                            data analysis
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
+                        <a href="/tag/howto.html">
+                            HowTo
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/pelican.html">
+                            pelican
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/python.html">
+                            python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/raspberry-pi.html">
+                            raspberry pi
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/vagrant.html">
+                            vagrant
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/virtualbox.html">
+                            virtualbox
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/virtualenv.html">
+                            virtualenv
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/virtualization.html">
+                            virtualization
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
 
-&lt;p&gt;or combine downloading and registering in a single step&amp;nbsp;with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
-&lt;/pre&gt;&lt;/div&gt;
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://pandas.pydata.org/" target="_blank">
+                Pandas
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.fabfile.org/" target="_blank">
+                Fabric
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://www.vagrantup.com/" target="_blank">
+                Vagrant
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 rcyphers
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
 
 
-&lt;h3&gt;3. Install&amp;nbsp;VirtualBox&lt;/h3&gt;
-&lt;p&gt;To install VirtualBox,&amp;nbsp;do:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get update
-sudo apt-get install virtualbox-5.1
-sudo apt-get install dkms
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Test it&amp;nbsp;out:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vboxmanage --version
-virtualbox
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Install VirtualBox Guest&amp;nbsp;Additions&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;Guest Additions&lt;/em&gt; is a package of software components that comes with VirtualBox to improve the Guest performance and provide additional convenience&amp;nbsp;features.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Guest Additions are designed to be installed inside a virtual machine after the guest operating system has been installed. They consist of device drivers and system applications that optimize the guest operating system for better performance and&amp;nbsp;usability.&lt;/p&gt;
-&lt;p&gt;The VirtualBox Guest Additions for all supported guest operating systems are provided as a single &lt;span class="caps"&gt;CD&lt;/span&gt;-&lt;span class="caps"&gt;ROM&lt;/span&gt; image file which is called &lt;code&gt;VBoxGuestAdditions.iso&lt;/code&gt;. This image file is located in the installation directory of VirtualBox. To install the Guest Additions for a particular &lt;span class="caps"&gt;VM&lt;/span&gt;, you mount this &lt;span class="caps"&gt;ISO&lt;/span&gt; file in your &lt;span class="caps"&gt;VM&lt;/span&gt; as a virtual &lt;span class="caps"&gt;CD&lt;/span&gt;-&lt;span class="caps"&gt;ROM&lt;/span&gt; and install from&amp;nbsp;there.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Detailed installation instructions can be found&amp;nbsp;here:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://www.virtualbox.org/manual/ch04.html"&gt;Oracle &lt;span class="caps"&gt;VM&lt;/span&gt; VirtualBox User Manual - Chapter 4. Guest&amp;nbsp;Additions&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Installing the Guest Additions is quite simple, really. There’s nothing you have to download, as they come with your VirtualBox installation. All you need to do is boot up your desired virtual machine, and then choose &lt;code&gt;Devices -&amp;gt; Insert Guest Additions CD image&lt;/code&gt;. This will insert an &lt;span class="caps"&gt;ISO&lt;/span&gt; image into the virtual &lt;span class="caps"&gt;CD&lt;/span&gt; drive attached to the virtual machine, which should start an autorun&amp;nbsp;prompt.&lt;/p&gt;
-&lt;p&gt;In Windows, it should install with ease thanks to the installer. In Linux, you’ll need to enter your password before the installer takes care of the rest. However, it’ll only work well if you make sure you have gcc, g++, dkms, and kernel-devel&amp;nbsp;installed.&lt;/p&gt;
-&lt;p&gt;In Ubuntu, before choosing to install the Guest Additions, you just need to run the terminal&amp;nbsp;command:&lt;/p&gt;
-&lt;p&gt;sudo apt-get install gcc g++&amp;nbsp;dkms&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="http://www.makeuseof.com/tag/virtualbox-guest-additions-what-they-are-and-how-to-install-them/"&gt;VirtualBox’s Guest Additions: What They Are And How To Install&amp;nbsp;Them&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2&gt;Upgrading VirtualBox Guest&amp;nbsp;Additions&lt;/h2&gt;
-&lt;p&gt;After upgrading VirtualBox it is recommended to upgrade the guest additions as&amp;nbsp;well.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Each version of VirtualBox, even minor releases, ship with their own version of the Guest Additions. While the interfaces through which the VirtualBox core communicates with the Guest Additions are kept stable so that Guest Additions already installed in a &lt;span class="caps"&gt;VM&lt;/span&gt; should continue to work when VirtualBox is upgraded on the host, for best results, it is recommended to keep the Guest Additions at the same&amp;nbsp;version.&lt;/p&gt;
-&lt;p&gt;Starting with VirtualBox 3.1, the Windows and Linux Guest Additions therefore check automatically whether they have to be updated. If the host is running a newer VirtualBox version than the Guest Additions, a notification with further instructions is displayed in the&amp;nbsp;guest.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="https://www.virtualbox.org/manual/ch04.html"&gt;Chapter 4. Guest Additions - 4.1.&amp;nbsp;Introduction&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3&gt;Keep Guest Additions Up to Date with the &lt;code&gt;vagrant-vbguest&lt;/code&gt; Plugin&lt;/h3&gt;
-&lt;p&gt;You can install a  plugin called &lt;code&gt;vagrant-vbguest&lt;/code&gt; which will check and update the VirtualBox guest additions every time you run a vagrant up&amp;nbsp;command.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;When we upgrade VirtualBox, we will get prompted to update the guest additions. That means that the installed version updates with the base version of VirtualBox itself. It does not automatically go back and retrofit the existing machines with the updated guest additions&amp;nbsp;though.&lt;/p&gt;
-&lt;p&gt;If you run vagrant up after you’ve updated VirtualBox, you&amp;#8217;ll see a message indicating you have a mismatch in your guest&amp;nbsp;additions.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="http://discoposse.com/2016/05/23/autoupdating-virtualbox-guest-additions-with-vagrant-vbguest/"&gt;Keeping Guest Additions Up to Date with the vagrant-vbguest&amp;nbsp;Plugin&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;blockquote&gt;
-&lt;p&gt;there&amp;#8217;s actually a nice &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; automated way of keeping your &lt;span class="caps"&gt;VM&lt;/span&gt;&amp;#8217;s guest additions in sync with&amp;nbsp;virtualbox.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="http://kvz.io/blog/2013/01/16/vagrant-tip-keep-virtualbox-guest-additions-in-sync/"&gt;Vagrant Tip: Sync VirtualBox Guest&amp;nbsp;Additions&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;It&amp;#8217;s not difficult to manually update the VirtualBox Guest Additions version, from the host command&amp;nbsp;line:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vagrant vbguest
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;hr&gt;
-&lt;blockquote&gt;
-&lt;p&gt;I have never realized how difficult it is to find the download page for the VirtualBox Guest additions, it is not accessible from the wiki, at this time&amp;#8230; After some time spent on Google, here is the&amp;nbsp;answer&amp;#8230;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="https://blogs.oracle.com/joshis/virtualbox-guest-additions-iso-download"&gt;VirtualBox Guest Additions &lt;span class="caps"&gt;ISO&lt;/span&gt;&amp;nbsp;Download&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h1&gt;&lt;span class="caps"&gt;INSTALLING&lt;/span&gt; &lt;span class="caps"&gt;VAGRANT&lt;/span&gt;&lt;/h1&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Installing Vagrant is extremely easy. Head over to the &lt;a href="https://www.vagrantup.com/downloads.html"&gt;Vagrant downloads page&lt;/a&gt; and get the appropriate installer or package for your platform.  You can find the &lt;span class="caps"&gt;SHA256&lt;/span&gt; checksums for Vagrant 2.0.0 online and you can verify the checksum&amp;#8217;s signature file, which has been signed using HashiCorp&amp;#8217;s &lt;span class="caps"&gt;GPG&lt;/span&gt;&amp;nbsp;key. &lt;/p&gt;
-&lt;p&gt;Install the package using standard procedures for your operating&amp;nbsp;system.&lt;/p&gt;
-&lt;p&gt;Caveats&lt;/p&gt;
-&lt;p&gt;Beware of system package managers! Some operating system distributions include a vagrant package in their upstream package repos. Please do not install Vagrant in this manner. Typically these packages are missing dependencies or include very outdated versions of Vagrant. If you install via your system&amp;#8217;s package manager, it is very likely that you will experience issues. Please use the official installers on the downloads&amp;nbsp;page.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="https://www.vagrantup.com/docs/installation/"&gt;Installing&amp;nbsp;Vagrant&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;Vagrant version 2.0.0 was released September 7, 2017. &lt;a href="https://github.com/mitchellh/vagrant/blob/master/CHANGELOG.md"&gt;&lt;span class="caps"&gt;CHANGELOG&lt;/span&gt;.md&lt;/a&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.deb
-sudo dpkg -i vagrant_2.0.0_x86_64.deb 
-apt-get install -f
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Test it&amp;nbsp;out:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;which vagrant
-vagrant --version
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;hr&gt;
-&lt;h2&gt;Resources&lt;/h2&gt;
-&lt;p&gt;&lt;a href="http://www.flashguides.co.uk/guide/Getting_Started_With_VirtualBox"&gt;Getting Started With&amp;nbsp;VirtualBox&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://blog.scottlowe.org/2015/06/08/using-vagrant-to-learn-ansible/"&gt;Using Vagrant to Help Learn&amp;nbsp;Ansible&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.thegeekstuff.com/2012/02/virtualbox-install-create-vm/"&gt;How to Install Oracle &lt;span class="caps"&gt;VM&lt;/span&gt; VirtualBox and Create a Virtual&amp;nbsp;Machine&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.thegeekstuff.com/2012/03/virtualbox-guest-additions/"&gt;How to Setup VirtualBox Guest Additions and&amp;nbsp;Network&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://www.vagrantup.com/docs/virtualbox/boxes.html"&gt;Creating a Base&amp;nbsp;Box&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;</content><category term="howTo"></category><category term="vagrant"></category><category term="virtualbox"></category></entry></feed>
+</body>
+</html>

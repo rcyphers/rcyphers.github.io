@@ -9,41 +9,38 @@
 
 
 
-<link rel="canonical" href="https://rcyphers.github.io/vagrant-virtualBox-installation.html">
+<link rel="canonical" href="/vagrant-virtualBox-install-notes.html">
 
         <meta name="author" content="rcyphers" />
-        <meta name="keywords" content="howTo,vagrant,virtualbox" />
+        <meta name="keywords" content="howTo,vagrant,virtualbox,virtualization" />
         <meta name="description" content="Notes on Installing VirtualBox and Vagrant" />
 
         <meta property="og:site_name" content="rcyphers:notebook" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Notes on Installing VirtualBox and Vagrant on Ubuntu 14.04"/>
-        <meta property="og:url" content="https://rcyphers.github.io/vagrant-virtualBox-installation.html"/>
+        <meta property="og:url" content="/vagrant-virtualBox-install-notes.html"/>
         <meta property="og:description" content="Notes on Installing VirtualBox and Vagrant"/>
         <meta property="article:published_time" content="2016-02-26" />
-            <meta property="article:section" content="HowTo" />
+            <meta property="article:section" content="Cookbook" />
             <meta property="article:tag" content="howTo" />
             <meta property="article:tag" content="vagrant" />
             <meta property="article:tag" content="virtualbox" />
+            <meta property="article:tag" content="virtualization" />
             <meta property="article:author" content="rcyphers" />
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://rcyphers.github.io/theme/css/bootstrap.flatly.min.css" type="text/css"/>
-    <link href="https://rcyphers.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/theme/css/bootstrap.flatly.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="https://rcyphers.github.io/theme/css/pygments/solarizeddark.css" rel="stylesheet">
-        <link href="https://rcyphers.github.io/theme/css/typogrify.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://rcyphers.github.io/theme/css/style.css" type="text/css"/>
-        <link href="https://rcyphers.github.io/static/custom.css" rel="stylesheet">
-
-        <link href="https://rcyphers.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="rcyphers:notebook ATOM Feed"/>
+    <link href="/theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+        <link href="/static/custom.css" rel="stylesheet">
 
 
 
-        <link href="https://rcyphers.github.io/feeds/howto.atom.xml" type="application/atom+xml" rel="alternate"
-              title="rcyphers:notebook HowTo ATOM Feed"/>
+
 
 </head>
 <body>
@@ -57,16 +54,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="https://rcyphers.github.io/" class="navbar-brand">
+            <a href="/" class="navbar-brand">
 rcyphers:notebook            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="https://rcyphers.github.io/category/howto.html">Howto</a>
+                            <a href="/category/cookbook.html">Cookbook</a>
                         </li>
                         <li >
-                            <a href="https://rcyphers.github.io/category/projects.html">Projects</a>
+                            <a href="/category/projects.html">Projects</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -81,14 +78,14 @@ rcyphers:notebook            </a>
     <div class="row">
         <div class="col-sm-9">
             <ol class="breadcrumb">
-                <li><a href="https://rcyphers.github.io" title="rcyphers:notebook"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="" title="rcyphers:notebook"><i class="fa fa-home fa-lg"></i></a></li>
                 <li class="active">Notes on Installing VirtualBox and Vagrant on Ubuntu&nbsp;14.04</li>
             </ol>
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://rcyphers.github.io/vagrant-virtualBox-installation.html"
+                    <a href="/vagrant-virtualBox-install-notes.html"
                        rel="bookmark"
                        title="Permalink to Notes on Installing VirtualBox and Vagrant on Ubuntu 14.04">
                         Notes on Installing VirtualBox and Vagrant on Ubuntu&nbsp;14.04
@@ -109,26 +106,19 @@ rcyphers:notebook            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://rcyphers.github.io/tag/howto.html">howTo</a>
+	<a href="/tag/howto.html">howTo</a>
         /
-	<a href="https://rcyphers.github.io/tag/vagrant.html">vagrant</a>
+	<a href="/tag/vagrant.html">vagrant</a>
         /
-	<a href="https://rcyphers.github.io/tag/virtualbox.html">virtualbox</a>
+	<a href="/tag/virtualbox.html">virtualbox</a>
+        /
+	<a href="/tag/virtualization.html">virtualization</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
                 <hr>
-<p>created: <em>Fri Feb 26 20:36:23 <span class="caps">EST</span> 2016</em><br>
-updated: <em>Fri Sep  8 13:00:43 <span class="caps">EDT</span>&nbsp;2017</em></p>
-<p>Tested&nbsp;on:</p>
-<ul>
-<li>VirtualBox v5.0.14, Vagrant v1.8.1 on Ubuntu 14.04.4 <span class="caps">LTS</span></li>
-<li>VirtualBox v5.1.26, Vagrant v2.0.0 on Ubuntu 14.04.5 <span class="caps">LTS</span></li>
-</ul>
-<hr>
-<p>These are notes for how to install VirtualBox and Vagrant on&nbsp;Ubuntu.</p>
 <h1>Installing&nbsp;VirtualBox</h1>
-<p>VirtualBox is a tool that allows you to create virtual computers running their own operating system within which you can safely experiment without breaking your actual&nbsp;computer.</p>
+<p>VirtualBox is a tool that allows you to create virtual computers (virtual machines) running their own operating system within which you can safely experiment without breaking your actual&nbsp;computer.</p>
 <p>VirtualBox is free (as in beer) and open source, and you can find more information at <a href="https://www.virtualbox.org">VirtualBox.org</a>.</p>
 <h2>Instructions for Installing VirtualBox on Debian-based Linux&nbsp;Distributions</h2>
 <h3>1. Download&nbsp;VirtualBox</h3>
@@ -169,60 +159,25 @@ virtualbox
 <p><em>Guest Additions</em> is a package of software components that comes with VirtualBox to improve the Guest performance and provide additional convenience&nbsp;features.</p>
 <blockquote>
 <p>Guest Additions are designed to be installed inside a virtual machine after the guest operating system has been installed. They consist of device drivers and system applications that optimize the guest operating system for better performance and&nbsp;usability.</p>
-<p>The VirtualBox Guest Additions for all supported guest operating systems are provided as a single <span class="caps">CD</span>-<span class="caps">ROM</span> image file which is called <code>VBoxGuestAdditions.iso</code>. This image file is located in the installation directory of VirtualBox. To install the Guest Additions for a particular <span class="caps">VM</span>, you mount this <span class="caps">ISO</span> file in your <span class="caps">VM</span> as a virtual <span class="caps">CD</span>-<span class="caps">ROM</span> and install from&nbsp;there.</p>
 </blockquote>
-<p>Detailed installation instructions can be found&nbsp;here:</p>
-<p><a href="https://www.virtualbox.org/manual/ch04.html">Oracle <span class="caps">VM</span> VirtualBox User Manual - Chapter 4. Guest&nbsp;Additions</a></p>
-<hr>
-<blockquote>
-<p>Installing the Guest Additions is quite simple, really. There’s nothing you have to download, as they come with your VirtualBox installation. All you need to do is boot up your desired virtual machine, and then choose <code>Devices -&gt; Insert Guest Additions CD image</code>. This will insert an <span class="caps">ISO</span> image into the virtual <span class="caps">CD</span> drive attached to the virtual machine, which should start an autorun&nbsp;prompt.</p>
-<p>In Windows, it should install with ease thanks to the installer. In Linux, you’ll need to enter your password before the installer takes care of the rest. However, it’ll only work well if you make sure you have gcc, g++, dkms, and kernel-devel&nbsp;installed.</p>
-<p>In Ubuntu, before choosing to install the Guest Additions, you just need to run the terminal&nbsp;command:</p>
-<p>sudo apt-get install gcc g++&nbsp;dkms</p>
-</blockquote>
-<p><a href="http://www.makeuseof.com/tag/virtualbox-guest-additions-what-they-are-and-how-to-install-them/">VirtualBox’s Guest Additions: What They Are And How To Install&nbsp;Them</a></p>
+<p>Detailed installation instructions can be found here:
+<a href="https://www.virtualbox.org/manual/ch04.html">Oracle <span class="caps">VM</span> VirtualBox User Manual - Chapter 4. Guest&nbsp;Additions</a></p>
 <hr>
 <h2>Upgrading VirtualBox Guest&nbsp;Additions</h2>
 <p>After upgrading VirtualBox it is recommended to upgrade the guest additions as&nbsp;well.</p>
-<blockquote>
-<p>Each version of VirtualBox, even minor releases, ship with their own version of the Guest Additions. While the interfaces through which the VirtualBox core communicates with the Guest Additions are kept stable so that Guest Additions already installed in a <span class="caps">VM</span> should continue to work when VirtualBox is upgraded on the host, for best results, it is recommended to keep the Guest Additions at the same&nbsp;version.</p>
-<p>Starting with VirtualBox 3.1, the Windows and Linux Guest Additions therefore check automatically whether they have to be updated. If the host is running a newer VirtualBox version than the Guest Additions, a notification with further instructions is displayed in the&nbsp;guest.</p>
-</blockquote>
-<p><a href="https://www.virtualbox.org/manual/ch04.html">Chapter 4. Guest Additions - 4.1.&nbsp;Introduction</a></p>
-<hr>
-<h3>Keep Guest Additions Up to Date with the <code>vagrant-vbguest</code> Plugin</h3>
-<p>You can install a  plugin called <code>vagrant-vbguest</code> which will check and update the VirtualBox guest additions every time you run a vagrant up&nbsp;command.</p>
-<blockquote>
-<p>When we upgrade VirtualBox, we will get prompted to update the guest additions. That means that the installed version updates with the base version of VirtualBox itself. It does not automatically go back and retrofit the existing machines with the updated guest additions&nbsp;though.</p>
-<p>If you run vagrant up after you’ve updated VirtualBox, you&#8217;ll see a message indicating you have a mismatch in your guest&nbsp;additions.</p>
-</blockquote>
+<p>You can install a  plugin called <code>vagrant-vbguest</code> which will check and automatically update the VirtualBox guest additions every time you run a vagrant up&nbsp;command.</p>
 <p><a href="http://discoposse.com/2016/05/23/autoupdating-virtualbox-guest-additions-with-vagrant-vbguest/">Keeping Guest Additions Up to Date with the vagrant-vbguest&nbsp;Plugin</a></p>
-<hr>
-<blockquote>
-<p>there&#8217;s actually a nice <span class="amp">&amp;</span> automated way of keeping your <span class="caps">VM</span>&#8217;s guest additions in sync with&nbsp;virtualbox.</p>
-</blockquote>
 <p><a href="http://kvz.io/blog/2013/01/16/vagrant-tip-keep-virtualbox-guest-additions-in-sync/">Vagrant Tip: Sync VirtualBox Guest&nbsp;Additions</a></p>
-<p>It&#8217;s not difficult to manually update the VirtualBox Guest Additions version, from the host command&nbsp;line:</p>
-<div class="highlight"><pre><span></span>vagrant vbguest
-</pre></div>
-
-
 <hr>
-<blockquote>
-<p>I have never realized how difficult it is to find the download page for the VirtualBox Guest additions, it is not accessible from the wiki, at this time&#8230; After some time spent on Google, here is the&nbsp;answer&#8230;</p>
-</blockquote>
-<p><a href="https://blogs.oracle.com/joshis/virtualbox-guest-additions-iso-download">VirtualBox Guest Additions <span class="caps">ISO</span>&nbsp;Download</a></p>
-<hr>
-<h1><span class="caps">INSTALLING</span> <span class="caps">VAGRANT</span></h1>
-<blockquote>
-<p>Installing Vagrant is extremely easy. Head over to the <a href="https://www.vagrantup.com/downloads.html">Vagrant downloads page</a> and get the appropriate installer or package for your platform.  You can find the <span class="caps">SHA256</span> checksums for Vagrant 2.0.0 online and you can verify the checksum&#8217;s signature file, which has been signed using HashiCorp&#8217;s <span class="caps">GPG</span>&nbsp;key. </p>
+<h1>Installing&nbsp;Vagrant</h1>
+<p>Installing Vagrant is very easy. Download the appropriate installer or package for your platform from the <a href="https://www.vagrantup.com/downloads.html">Vagrant downloads page</a>.</p>
 <p>Install the package using standard procedures for your operating&nbsp;system.</p>
-<p>Caveats</p>
+<p>The official <a href="https://www.vagrantup.com/docs/installation/">Vagrant installation instructions</a> warns against installing Vagrant from operating system&nbsp;distros:</p>
+<blockquote>
 <p>Beware of system package managers! Some operating system distributions include a vagrant package in their upstream package repos. Please do not install Vagrant in this manner. Typically these packages are missing dependencies or include very outdated versions of Vagrant. If you install via your system&#8217;s package manager, it is very likely that you will experience issues. Please use the official installers on the downloads&nbsp;page.</p>
 </blockquote>
-<p><a href="https://www.vagrantup.com/docs/installation/">Installing&nbsp;Vagrant</a></p>
 <hr>
-<p>Vagrant version 2.0.0 was released September 7, 2017. <a href="https://github.com/mitchellh/vagrant/blob/master/CHANGELOG.md"><span class="caps">CHANGELOG</span>.md</a></p>
+<p>Vagrant version 2.0.0 was released September 7,&nbsp;2017.</p>
 <div class="highlight"><pre><span></span>wget https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.deb
 sudo dpkg -i vagrant_2.0.0_x86_64.deb 
 apt-get install -f
@@ -236,13 +191,13 @@ vagrant --version
 
 
 <hr>
-<h2>Resources</h2>
-<p><a href="http://www.flashguides.co.uk/guide/Getting_Started_With_VirtualBox">Getting Started With&nbsp;VirtualBox</a></p>
-<p><a href="http://blog.scottlowe.org/2015/06/08/using-vagrant-to-learn-ansible/">Using Vagrant to Help Learn&nbsp;Ansible</a></p>
-<p><a href="http://www.thegeekstuff.com/2012/02/virtualbox-install-create-vm/">How to Install Oracle <span class="caps">VM</span> VirtualBox and Create a Virtual&nbsp;Machine</a></p>
-<p><a href="http://www.thegeekstuff.com/2012/03/virtualbox-guest-additions/">How to Setup VirtualBox Guest Additions and&nbsp;Network</a></p>
-<p><a href="https://www.vagrantup.com/docs/virtualbox/boxes.html">Creating a Base&nbsp;Box</a></p>
-<hr>
+<p>created: <em>Fri Feb 26 20:36:23 <span class="caps">EST</span> 2016</em><br>
+updated: <em>Fri Sep  8 13:00:43 <span class="caps">EDT</span>&nbsp;2017</em></p>
+<p>Tested&nbsp;on:</p>
+<ul>
+<li>VirtualBox v5.0.14, Vagrant v1.8.1 on Ubuntu 14.04.4 <span class="caps">LTS</span></li>
+<li>VirtualBox v5.1.26, Vagrant v2.0.0 on Ubuntu 14.04.5 <span class="caps">LTS</span></li>
+</ul>
             </div>
             <!-- /.entry-content -->
         </article>
@@ -264,17 +219,17 @@ vagrant --version
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
-                        <a href="https://rcyphers.github.io/pelican-base-install.html">
+                        <a href="/pelican-install-notes.html">
                             Pelican Quickstart: Install Pelican on Ubuntu&nbsp;16.04
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://rcyphers.github.io/ISP-perf-check-v4.html">
+                        <a href="/ISP-perf-check.html">
                             Verifying <span class="caps">ISP</span> performance with Raspberry Pi and&nbsp;pandas
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="https://rcyphers.github.io/vagrant-virtualBox-installation.html">
+                        <a href="/vagrant-virtualBox-install-notes.html">
                             Notes on Installing VirtualBox and Vagrant on Ubuntu&nbsp;14.04
                         </a>
                     </li>
@@ -282,46 +237,51 @@ vagrant --version
             </li>
 
 
-            <li class="list-group-item"><a href="https://rcyphers.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+            <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group list-inline tagcloud" id="tags">
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/data-analysis.html">
+                        <a href="/tag/data-analysis.html">
                             data analysis
                         </a>
                     </li>
                     <li class="list-group-item tag-1">
-                        <a href="https://rcyphers.github.io/tag/howto.html">
+                        <a href="/tag/howto.html">
                             HowTo
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/pelican.html">
+                        <a href="/tag/pelican.html">
                             pelican
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/python.html">
+                        <a href="/tag/python.html">
                             python
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/raspberry-pi.html">
+                        <a href="/tag/raspberry-pi.html">
                             raspberry pi
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/vagrant.html">
+                        <a href="/tag/vagrant.html">
                             vagrant
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/virtualbox.html">
+                        <a href="/tag/virtualbox.html">
                             virtualbox
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="https://rcyphers.github.io/tag/virtualenv.html">
+                        <a href="/tag/virtualenv.html">
                             virtualenv
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="/tag/virtualization.html">
+                            virtualization
                         </a>
                     </li>
                 </ul>
@@ -370,13 +330,13 @@ vagrant --version
       </div>
    </div>
 </footer>
-<script src="https://rcyphers.github.io/theme/js/jquery.min.js"></script>
+<script src="/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="https://rcyphers.github.io/theme/js/bootstrap.min.js"></script>
+<script src="/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="https://rcyphers.github.io/theme/js/respond.min.js"></script>
+<script src="/theme/js/respond.min.js"></script>
 
 
 </body>
