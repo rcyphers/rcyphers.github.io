@@ -126,9 +126,11 @@ rcyphers:notebook            </a>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>My wife has the opportunity to work from home from time to time, which makes the reliability and performance of our home Internet service more important than it would be if it was only for recreational use. When she experienced several instances of sluggish application responsiveness one week, it seemed like a good time to collect some data and verfiy the <span class="caps">ISP</span>&nbsp;performance.</p>
-<p>As an added bonus, this also gave me a chance to apply the Python data analysis tools to a specific question for which I have personally generated the data&nbsp;set.</p>
-<h3 id="The-question-is:">The question is:<a class="anchor-link" href="#The-question-is:">¶</a></h3><h4 id="Is-my-ISP-reliable-and-performing-to-the-advertised-service-level?">Is my <span class="caps">ISP</span> reliable and performing to the advertised service level?<a class="anchor-link" href="#Is-my-ISP-reliable-and-performing-to-the-advertised-service-level?">¶</a></h4>
+<p>My wife has the opportunity to work from home from time to time, making the reliability and performance of our home Internet service more important than it would be if it was only for recreational use. Most of her work requires accessing applications and databases hosted on the corporate network over the Internet through a <span class="caps">VPN</span>.</p>
+<p>When she experienced several instances of sluggish application responsiveness one week, it seemed like a good time to collect some data and verfiy the <span class="caps">ISP</span>&nbsp;performance.</p>
+<p>As a bonus, this also gave me a chance to apply Python data analysis tools to a 
+answer a practical question with a data set of my own&nbsp;creation.</p>
+<h4 id="The-question-is:-Is-my-ISP-reliable-and-performing-to-the-advertised-service-level?">The question is: <em>Is my <span class="caps">ISP</span> reliable and performing to the advertised service level?</em><a class="anchor-link" href="#The-question-is:-Is-my-ISP-reliable-and-performing-to-the-advertised-service-level?">¶</a></h4>
 </div>
 </div>
 </div>
@@ -713,13 +715,136 @@ dtype: float64</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Add-a-datetime-column">Add a <code>datetime</code> column<a class="anchor-link" href="#Add-a-datetime-column">¶</a></h1><p>The original <code>Datetime</code> column was interpreted by pandas as a string type object.  Let&#8217;s add a new column of type <code>datetime</code> to facilitate analyzing as a&nbsp;timeseries.</p>
+<h3 id="Show-Minimum-and-Maximum-values">Show Minimum and Maximum values<a class="anchor-link" href="#Show-Minimum-and-Maximum-values">¶</a></h3><p>We can find the minimum/maximum values for each column using the pandas
+<code>DataFrame.min()</code> and <code>DataFrame.max()</code> functions:</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In [9]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Display the mimimum value for each column</span>
+<span class="c1"># (Note that the "Datetime" field is being interpreted as a string,</span>
+<span class="c1"># not a `datetime` type object).</span>
+<span class="n">df</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[9]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>Datetime    Fri Aug  4 05:05:01 EDT 2017
+Ping                              18.972
+Download                           43.23
+Upload                                 7
+dtype: object</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [10]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Display the maximal value for each column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[10]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>Datetime    Wed Sep 20 23:05:01 EDT 2017
+Ping                              47.549
+Download                          209.63
+Upload                             19.03
+dtype: object</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can find the row for which the value of a specific column is minimal/maximal using the pandas <code>Series.idxmax()</code> function:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [11]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Display the Minimum Download measurement event</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'Download'</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[11]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>Datetime    Tue Jun 27 06:30:01 EDT 2017
+Ping                              40.479
+Download                           43.23
+Upload                             16.44
+Name: 1172, dtype: object</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [12]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Display the Minimum Upload measurement event</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'Upload'</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[12]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>Datetime    Sun Jul  2 06:50:01 EDT 2017
+Ping                              20.366
+Download                          206.93
+Upload                                 7
+Name: 1892, dtype: object</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Add-a-datetime-column">Add a <code>datetime</code> column<a class="anchor-link" href="#Add-a-datetime-column">¶</a></h1><p>The original &#8220;Datetime&#8221; column was interpreted by pandas as a string type object.  Let&#8217;s add a new column of type <code>datetime</code> to facilitate analyzing as a&nbsp;timeseries.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'Datetime'</span><span class="p">:</span> <span class="s1">'Date'</span><span class="p">})</span>
@@ -745,7 +870,7 @@ dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [10]:</div>
+<div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># specify plot size (width, height) in inches, and resolution (DPI)</span>
@@ -762,9 +887,9 @@ dtype: float64</pre>
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[10]:</div>
+<div class="prompt output_prompt">Out[14]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre><matplotlib.legend.legend at 0x7f25d48b7b70></pre>
+<pre><matplotlib.legend.legend at 0x7fac1822ff60></pre>
 </div>
 </div>
 <div class="output_area">
@@ -1420,7 +1545,7 @@ JdnlGQQAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [11]:</div>
+<div class="prompt input_prompt">In [15]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># First create a grid of plots</span>
@@ -1441,9 +1566,9 @@ JdnlGQQAAAAASUVORK5CYII=
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[11]:</div>
+<div class="prompt output_prompt">Out[15]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre><matplotlib.text.text at 0x7f25d4795630></pre>
+<pre><matplotlib.text.text at 0x7fac181108d0></pre>
 </div>
 </div>
 <div class="output_area">
@@ -1709,7 +1834,7 @@ DV+aiwAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [12]:</div>
+<div class="prompt input_prompt">In [16]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Download </span>
@@ -1724,10 +1849,10 @@ DV+aiwAAAABJRU5ErkJggg==
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[12]:</div>
+<div class="prompt output_prompt">Out[16]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>[<matplotlib.text.text at 0x7f25d470add8>,
- <matplotlib.text.text at 0x7f25d468b160>]</pre>
+<pre>[<matplotlib.text.text at 0x7fac17e354e0>,
+ <matplotlib.text.text at 0x7fac17ded3c8>]</pre>
 </div>
 </div>
 <div class="output_area">
@@ -1875,7 +2000,7 @@ RK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [13]:</div>
+<div class="prompt input_prompt">In [17]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Upload</span>
@@ -1890,10 +2015,10 @@ RK5CYII=
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[13]:</div>
+<div class="prompt output_prompt">Out[17]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>[<matplotlib.text.text at 0x7f25d44be3c8>,
- <matplotlib.text.text at 0x7f25d4635320>]</pre>
+<pre>[<matplotlib.text.text at 0x7fac18023240>,
+ <matplotlib.text.text at 0x7fac17febd30>]</pre>
 </div>
 </div>
 <div class="output_area">
@@ -2031,8 +2156,8 @@ dCNcAgDQjXAJAEA3wiUAAN0IlwAAdCNcAgDQzf8HdDmkgzZD6mUAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Checking-for-patterns-of-intraday-variation">Checking for patterns of intraday variation<a class="anchor-link" href="#Checking-for-patterns-of-intraday-variation">¶</a></h1><p>Sometimes residential customers experience network slowdowns during peak times, when many people in the area are using the network at the same time. This is especially common for customers of cable providers because the backhaul network is typically shared among a users in a&nbsp;neighborhood.</p>
-<p>Regular periodic maintenance windows might also affect throughput, though those are scheduled for off-peak hours (e.g. early morning hours), so shouldn&#8217;t daytime&nbsp;performance.</p>
+<h1 id="Checking-for-patterns-of-intraday-variation">Checking for patterns of intraday variation<a class="anchor-link" href="#Checking-for-patterns-of-intraday-variation">¶</a></h1><p>Sometimes residential customers experience network slowdowns during peak times, when many people in the area are using the network at the same time. This is especially common for customers of cable providers because the &#8220;last mile&#8221; network is typically shared among a users in a&nbsp;neighborhood.</p>
+<p>Regular periodic maintenance windows might also affect throughput, though those are scheduled for off-peak hours (e.g. early morning hours), so shouldn&#8217;t affect normal daytime&nbsp;performance.</p>
 <p>We can look for these patterns by grouping observations by Hour-of-Day and looking for variations over the course of the&nbsp;day.</p>
 <p>Matplotlib provides a &#8220;box and whisker plot&#8221;, where the box extends from the lower to upper quartile values of the data, with a line at the median. The whiskers extend from the box to show the range of the&nbsp;data.</p>
 </div>
@@ -2040,7 +2165,7 @@ dCNcAgDQjXAJAEA3wiUAAN0IlwAAdCNcAgDQzf8HdDmkgzZD6mUAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [14]:</div>
+<div class="prompt input_prompt">In [18]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">'Datetime'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'HourOfDay'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Download'</span><span class="p">)</span>
@@ -2053,9 +2178,9 @@ dCNcAgDQjXAJAEA3wiUAAN0IlwAAdCNcAgDQzf8HdDmkgzZD6mUAAAAASUVORK5CYII=
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[14]:</div>
+<div class="prompt output_prompt">Out[18]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre><matplotlib.axes._subplots.axessubplot at 0x7f26096b5e48></pre>
+<pre><matplotlib.axes._subplots.axessubplot at 0x7fac181f2940></pre>
 </div>
 </div>
 <div class="output_area">
@@ -2257,7 +2382,7 @@ SZIkVcJCU5IkSZWw0JQkSVIlLDQlSZJUif8PB7eB+FyCiHIAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [15]:</div>
+<div class="prompt input_prompt">In [19]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -2268,7 +2393,7 @@ SZIkVcJCU5IkSZWw0JQkSVIlLDQlSZJUif8PB7eB+FyCiHIAAAAASUVORK5CYII=
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[15]:</div>
+<div class="prompt output_prompt">Out[19]:</div>
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
 <style>
@@ -2366,7 +2491,7 @@ SZIkVcJCU5IkSZWw0JQkSVIlLDQlSZJUif8PB7eB+FyCiHIAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Next-steps">Next steps<a class="anchor-link" href="#Next-steps">¶</a></h1><p>Working on this performance question got me thinking about practical approaches for <strong><em>continuous monitoring</em></strong> of networks and servers.  I&#8217;ve been evaluating several tools and approaches which I plan to discuss in another&nbsp;post.</p>
+<h1 id="Next-steps">Next steps<a class="anchor-link" href="#Next-steps">¶</a></h1><p>Working on this performance question got me thinking about practical approaches for <strong><em>continuous monitoring</em></strong> of networks and servers.  I&#8217;ve been evaluating several tools and approaches which I will cover in a later blog&nbsp;post.</p>
 </div>
 </div>
 </div>
